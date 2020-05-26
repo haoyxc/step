@@ -7,9 +7,20 @@
     <script src="script.js"></script>
   </head>
   <body>
+    <div class="header">
+        <!-- <a href="#default" class="logo">CompanyLogo</a> -->
+        <div class="header-right">
+            <!-- <a class="active" href="#home">Home</a> -->
+            <a href="#about-container" class="active">About</a>
+            <a href="#food-container">Food</a>
+            <a href="#contact-container">Contact</a>
+        </div>
+    </div>
+
     <div id="content">
-      <h1>My Portfolio</h1>
+      <h1 id="title">My Portfolio</h1>
         <div id="about-comtainer">
+            <h3>About Me</h3>
             <img src="/images/cindy.JPEG" width="300"/>
             <p>Hi! I'm a Computer Science student at the University of Pennsylvania from Plano, TX. I actually applied to college thinking I was going to study Philosophy, Politics, and Economics, but that ended up not panning out correctly. 
                 I was heavily invested in Speech and Debate in High school, so the humanities will always be an important part of who I am though :-) 
@@ -18,18 +29,22 @@
       
       
         <div id="food-container">
-            <button onclick="loadImgs()">See my sandwiches</button>
-            <div id="sandwich-container"></div>
+            <h3>My Food</h3>
+            <div id="sandwich-container">
+
+            </div>
         </div>
 
         <div id="message-container">
-            <p>Click here to get a random message:</p>
+            <h3>Message</h3>
+            <p>Click here to get a random message from me (things I say a lot):</p>
             <button onclick="addRandomGreeting()">Hello</button>
             <div id="greeting-container"></div>
         </div>
       
 
         <div id="contact=container">
+            <h3>Contact</h3>
             <p>If you want to contact me, here's how!</p>
             <a href="https://github.com/haoyxc" target=”_blank” >Github</a>
             <a href="https://www.linkedin.com/in/cindyhao/"target=”_blank” >LinkedIn</a>
