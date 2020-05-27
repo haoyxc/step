@@ -7,17 +7,17 @@
     <script src="script.js"></script>
   </head>
   <body>
-    
-    <div id="body">
+
+    <div id="content">
         <div class="header">
-            <!-- <a href="#default" class="logo">CompanyLogo</a> -->
             <div class="header-right">
-                <!-- <a class="active" href="#home">Home</a> -->
-                <a href="#about-container" class="active">About</a>
-                <a href="#food-container">Food</a>
-                <a href="#contact-container">Contact</a>
+                <a href="#about-container" class="active" onClick="setActiveTab(this)">About</a>
+                <a href="#food-container" onClick="setActiveTab(this)">Food</a>
+                <a href="#message-container" onClick="setActiveTab(this)">Message</a>
+                <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
             </div>
         </div>
+      
         <div id="content">
             <h1 id="title">Cindy Hao</h1>  
             
