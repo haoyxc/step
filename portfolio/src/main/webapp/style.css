@@ -6,9 +6,12 @@
 }
 #body {
     background-position: center;
-    background-image: url(/images/background/sunset.jpg);
+    background-image: url(/images/background/sunset3.jpg);
     background-attachment: fixed;
-    height: 100vh; 
+    min-height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh
 }
 #content {
   margin-left: auto;
@@ -34,4 +37,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around
+}
+#title {
+    text-align: center
 }
