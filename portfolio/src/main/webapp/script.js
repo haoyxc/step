@@ -26,3 +26,9 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+function setActiveTab(btn) {
+    const activeTabs = document.getElementsByClassName('active');
+    activeTabs[0].classList.remove('active'); 
+    btn.classList.add('active'); 
+}
