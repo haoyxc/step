@@ -21,3 +21,12 @@
     padding: 10px 20px;
     border-radius: 20px;
 }
+#profile-pic {
+    border-radius: 50%;
+    height: 100px;
+}
+#profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
