@@ -4,7 +4,12 @@
     --accent: #ffe3b0;
     --contrast: #8ed6ff;  
 }
-
+#body {
+    background-position: center;
+    background-image: url(/images/background/sunset.jpg);
+    background-attachment: fixed;
+    height: 100vh; 
+}
 #content {
   margin-left: auto;
   margin-right: auto;
