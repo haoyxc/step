@@ -1,9 +1,11 @@
+/* Define color scheme of page */
 :root {
     --primary: #ffcece;
     --primary-dark: #ffc1c8;
     --accent: #ffe3b0;
     --contrast: #8ed6ff;  
 }
+/* BACKGROUND IMAGES STYLES */
 #body {
     background-position: center;
     background-image: url(/images/background/sunset3.jpg);
@@ -19,10 +21,25 @@
   width: 650px;
 }
 
+/* PROFILE STYLES */
+#profile-pic {
+    border-radius: 50%;
+    height: 100px;
+}
+#profile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
+}
+#title {
+    text-align: center
+}
+
 #greeting-container {
   margin-top: 20px;
 }
 
+/* HEADER STYLES */
 .header {
   overflow: hidden;
   background-color: var(--primary);
@@ -86,16 +103,4 @@ li > img {
     margin: 15px;
     padding: 10px 20px;
     border-radius: 20px;
-}
-#profile-pic {
-    border-radius: 50%;
-    height: 100px;
-}
-#profile{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around
-}
-#title {
-    text-align: center
 }
