@@ -24,6 +24,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 650px;
+  padding: 20px; 
 }
 
 /* PROFILE STYLES */
@@ -51,6 +52,9 @@
   overflow: hidden;
   background-color: var(--primary);
   padding: 20px 10px;
+  position: fixed;
+  top: 0; 
+  width: 100%; 
 }
 
 /* Style the header links */
