@@ -16,13 +16,13 @@
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
  */
 function setActiveTab(btn) {
-    //Gets all tabs with the class name "active" (there should only be 1)
-    const activeTabs = document.getElementsByClassName('active');
+  //Gets all tabs with the class name "active" (there should only be 1)
+  const activeTabs = document.getElementsByClassName('active');
 
-    //Remove the "active" class from that element
-    activeTabs[0].classList.remove('active'); 
+  //Remove the "active" class from that element
+  activeTabs[0].classList.remove('active'); 
 
-    //Add "active" class to the clicked element
-    btn.classList.add('active'); 
+  //Add "active" class to the clicked element
+  btn.classList.add('active'); 
 }
 
