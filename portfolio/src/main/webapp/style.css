@@ -79,29 +79,27 @@
   float: right;
 }
 
-ul {
+.img-row {
   display: flex;
   flex-wrap: wrap;
-  /* padding: 0 4px; */
+  flex-direction: row; 
+  padding: 0 4px
 }
 
-li {
- /* flex: 25%;
-  max-width: 25%;
-  padding: 0 4px; */
-  height: 40vh;
-  flex-grow: 1;
+.img-col {
+  flex: 50%;
+  padding: 0 4px;
 }
 
-li:last-child {
-  flex-grow: 10;
-}
-
-li > img {
-  max-height: 100%;
-  min-width: 100%;
-  object-fit: cover;
-  vertical-align: bottom;
+.img-col img {
+  overflow: hidden;
+  max-width: 250px; 
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 250px; 
+  height: 250px;
+  background-position: center; 
+  object-fit: cover; 
 }
 
 .container {
