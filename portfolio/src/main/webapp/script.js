@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-$(document).ready(loadSkills())
-
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
  */
@@ -28,16 +26,18 @@ function setActiveTab(btn) {
   btn.classList.add('active'); 
 }
 
+/**
+ * Load skills bar in skills container
+ */
 function loadSkills () {
-  console.log("IN SKILLS")
   $(".skill-per").each(function() {
-  var $this = $(this);
-  var per = $this.attr("per");
+  let $this = $(this);
+  let per = $this.attr("per");
   $this.css("width", per + "%");
   $({ animatedValue: 0 }).animate(
     { animatedValue: per },
     {
-      duration: 1000,
+      duration: 7500,
       step: function() {
         $this.attr("per", Math.floor(this.animatedValue) + "%");
       },
