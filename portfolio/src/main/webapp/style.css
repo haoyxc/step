@@ -78,6 +78,7 @@
 /* Float the link section to the right */
 .header-right {
   float: right;
+  margin-right: 20px; 
 }
 
 .img-row {
