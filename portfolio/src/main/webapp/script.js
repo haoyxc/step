@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+$(document).ready(loadSkills())
+
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
  */
@@ -24,5 +26,26 @@ function setActiveTab(btn) {
 
   //Add "active" class to the clicked element
   btn.classList.add('active'); 
+}
+
+function loadSkills () {
+  console.log("IN SKILLS")
+  $(".skill-per").each(function() {
+  var $this = $(this);
+  var per = $this.attr("per");
+  $this.css("width", per + "%");
+  $({ animatedValue: 0 }).animate(
+    { animatedValue: per },
+    {
+      duration: 1000,
+      step: function() {
+        $this.attr("per", Math.floor(this.animatedValue) + "%");
+      },
+      complete: function() {
+        $this.attr("per", Math.floor(this.animatedValue) + "%");
+      }
+    }
+  );
+});
 }
 
