@@ -122,16 +122,19 @@
 }
 
 .skill-name {
-  font-size: 15px;
-  font-weight: 400;
-  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 500;
   margin: 20px 0; 
+  text-align: left;
+  margin-bottom: 30px; 
 }
+
 .skill-bar {
   height: 20px;
   background: #cacaca;
   border-radius: 8px;
 }
+
 .skill-per {
   height: 20px;
   background-color: var(--contrast);
@@ -140,6 +143,7 @@
   position: relative;
   transition: 1s linear;
 }
+
 .skill-per::before {
   content: attr(per);
   position: absolute;
@@ -152,6 +156,7 @@
   right: 0;
   transform: translateX(50%);
 }
+
 .skill-per::after {
   content: "";
   position: absolute;
