@@ -21,6 +21,7 @@
   margin-right: auto;
   width: 650px;
   padding: 20px;
+  padding-top: 50px; 
 }
 
 /* PROFILE STYLES */
@@ -43,7 +44,7 @@
 .header {
   overflow: hidden;
   background-color: var(--primary);
-  padding: 20px 0px;
+  padding: 20px 0;
   position: fixed;
   top: 0; 
   width: 100%; 
@@ -52,7 +53,7 @@
 
 /* Style the header links */
 .header a {
-  float: left;
+  /* float: left; */
   color: black;
   text-align: center;
   padding: 12px;

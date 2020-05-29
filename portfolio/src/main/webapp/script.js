@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+document.addEventListener("DOMContentLoaded", loadSkills);
+
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
  */
