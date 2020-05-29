@@ -115,6 +115,10 @@
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.2); 
 }
 /* SKILLS */
+#skills-container h3 {
+  margin-bottom: 0px;
+}
+
 .skills {
   width: 100%;
   max-width: 600px;
