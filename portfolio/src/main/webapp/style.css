@@ -21,6 +21,7 @@
   margin-right: auto;
   width: 650px;
   padding: 20px; 
+  padding-top: 50px;
 }
 
 /* PROFILE STYLES */
@@ -161,18 +162,6 @@
   top: -35px;
   right: 0;
   transform: translateX(50%);
-}
-
-.skill-per::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #000;
-  top: -16px;
-  right: 0;
-  transform: translateX(50%) rotate(45deg);
-  border-radius: 2px;
 }
 
 /* CONTACT STYLES */
