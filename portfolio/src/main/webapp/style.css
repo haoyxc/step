@@ -51,6 +51,7 @@
   position: fixed;
   top: 0; 
   width: 100%; 
+  z-index: 10; 
 }
 
 /* Style the header links */
@@ -114,6 +115,7 @@
   opacity: .85;
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.2); 
 }
+
 /* SKILLS */
 #skills-container h3 {
   margin-bottom: 0px;
@@ -171,5 +173,25 @@
   right: 0;
   transform: translateX(50%) rotate(45deg);
   border-radius: 2px;
+}
+
+/* CONTACT STYLES */
+#contact-container {
+  padding-bottom: 20px;
+}
+
+.link {
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 5px; 
+  padding: 10px; 
+  background: var(--primary-dark);
+  color: white; 
+}
+
+.link:hover {
+  text-decoration: none;
+  background: var(--accent);
+  color: black;
 }
 
