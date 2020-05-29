@@ -5,8 +5,9 @@
     <title>My Portfolio.</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
-  <body>
+  <body onload="loadSkills()">
     <div id="body"> 
       
       <!-- Header with page sections -->
@@ -28,6 +29,28 @@
           <p>
               Hi! I'm a Computer Science student at the University of Pennsylvania. I'm also a former Speech and Debater, bagel enthusiast, loyal friend, baker, and artist (or at least I like to think so). Welcome!
           </p >
+        </div>
+
+        <!-- Skills Container -->
+        <div id="skills-container" class="container">
+          <h3>Some of my skills</h3>
+          <div class="skills">
+
+            <!-- One Skill -->
+            <div class="skill">
+              <div class="skill-name">Self-Deprication</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="98"></div>
+                </div>
+            </div>  
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Self-confidence</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="10"></div>
+                </div>
+            </div>
+          </div>
         </div>
 
         <!-- Information about food!! -->
