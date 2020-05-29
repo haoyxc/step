@@ -31,21 +31,21 @@ function setActiveTab(btn) {
  */
 function loadSkills () {
   $(".skill-per").each(function() {
-  let $this = $(this);
-  let per = $this.attr("per");
-  $this.css("width", per + "%");
-  $({ animatedValue: 0 }).animate(
-    { animatedValue: per },
-    {
-      duration: 7500,
-      step: function() {
-        $this.attr("per", Math.floor(this.animatedValue) + "%");
-      },
-      complete: function() {
-        $this.attr("per", Math.floor(this.animatedValue) + "%");
+    let $this = $(this);
+    let per = $this.attr("per");
+    $this.css("width", per + "%");
+    $({ animatedValue: 0 }).animate(
+      { animatedValue: per },
+      {
+        duration: 7500,
+        step: function() {
+          $this.attr("per", Math.floor(this.animatedValue) + "%");
+        },
+        complete: function() {
+          $this.attr("per", Math.floor(this.animatedValue) + "%");
+        }
       }
-    }
-  );
+    );
 });
 }
 
