@@ -196,6 +196,10 @@ h2, h3 {
   padding-bottom: 20px;
 }
 
+#contact-container p {
+  margin-top: 5px; 
+}
+
 .link {
   border-radius: 10px;
   text-decoration: none;
