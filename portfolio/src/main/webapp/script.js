@@ -95,7 +95,7 @@ function loadSkills () {
 
   // Adds all of the messages to an unordered list
   msgs.forEach(m => {
-    const node = `<li class="msg">${m}</li>`; 
+    const node = `<p class="msg">${m}</p>`; 
     $("#all-messages").append(node); 
   }); 
  }
