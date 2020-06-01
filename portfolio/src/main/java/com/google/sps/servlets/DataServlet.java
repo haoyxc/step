@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,10 @@ public class DataServlet extends HttpServlet {
     data.add("cashew");
     data.add("pistachio"); 
     
+    Gson gson = new Gson();
+    String json = gson.toJson(data); 
+    
     response.setContentType("application/json;");
-    response.getWriter().println(data);
+    response.getWriter().println(json);
   }
 }
