@@ -24,6 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  List<String> data = new ArrayList<String>(); 
+  data.add("peanut");
+  data.add("cashew");
+  data.add("pistachio"); 
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
