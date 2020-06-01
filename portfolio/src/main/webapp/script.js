@@ -58,9 +58,8 @@ function loadSkills () {
   const response = await fetch('/data');
   // This gives a list of messages
   const msgs = await response.json();
-  console.log(msgs); 
 
-  // Adds all of the messages to an unordered list
+  // Adds all of the messages to a div
   msgs.forEach(m => {
     const node = `<p class="msg">${m}</p>`; 
     $("#all-messages").append(node); 
