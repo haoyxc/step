@@ -60,11 +60,14 @@ function loadSkills () {
   const msgs = await response.json();
 
   // Clear the child elements from the div to avoid duplicating
-  $("#all-messages").empty(); 
+  const root = document.getElementById("all-messages");
+  root.innterHTML = ""; 
 
   // Adds all of the messages to a div
   msgs.forEach(m => {
-    const node = `<p class="msg">${m}</p>`; 
-    $("#all-messages").append(node); 
+    const node = document.createElement("p"); 
+    node.className = "msg"; 
+    node.innerHTML = m;
+    root.appendChild(node); 
   }); 
  }
