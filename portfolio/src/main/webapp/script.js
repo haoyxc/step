@@ -60,8 +60,9 @@ function loadSkills () {
   const msgs = await response.json();
 
   // Clear the child elements from the div to avoid duplicating
+  $("#all-messages").empty(); 
+
   const root = document.getElementById("all-messages");
-  root.innterHTML = ""; 
 
   // Adds all of the messages to a div
   msgs.forEach(m => {
