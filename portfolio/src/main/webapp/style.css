@@ -219,6 +219,7 @@ h2, h3 {
   list-style: none;
   text-align: left; 
 }
+
 #all-messages .msg {
   background: var(--primary-dark); 
   padding: 15px;
