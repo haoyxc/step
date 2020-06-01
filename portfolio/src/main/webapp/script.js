@@ -59,6 +59,9 @@ function loadSkills () {
   // This gives a list of messages
   const msgs = await response.json();
 
+  // Clear the child elements from the div to avoid duplicating
+  $("#all-messages").empty(); 
+
   // Adds all of the messages to a div
   msgs.forEach(m => {
     const node = `<p class="msg">${m}</p>`; 
