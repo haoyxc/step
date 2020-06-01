@@ -45,6 +45,8 @@
 
 })();
 
+document.addEventListener("DOMContentLoaded", loadSkills);
+
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
  */
@@ -59,3 +61,34 @@ function setActiveTab(btn) {
   btn.classList.add('active'); 
 }
 
+/**
+ * Load skills bar in skills container
+ */
+function loadSkills () {
+  $(".skill-per").each(function() {
+    let $this = $(this);
+    let per = $this.attr("per");
+    $this.css("width", per + "%");
+    $({ animatedValue: 0 }).animate(
+      { animatedValue: per },
+      {
+        duration: 7500,
+        step: function() {
+          $this.attr("per", Math.floor(this.animatedValue) + "%");
+        },
+        complete: function() {
+          $this.attr("per", Math.floor(this.animatedValue) + "%");
+        }
+      }
+    );
+  });
+}
+
+/**
+ * Makes a request to /data and gets the response
+ */
+ async function fetchFromData() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('secret-message').innerText = quote; 
+ }

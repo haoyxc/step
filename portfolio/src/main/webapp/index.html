@@ -2,8 +2,9 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio.</title>
+    <title>Cindy Hao</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
   </head>
   <body>
@@ -13,6 +14,7 @@
       <div class="header">
         <div class="header-right">
           <a href="#about-container" class="active" onClick="setActiveTab(this)">About</a>
+          <a href="#skills-container" onClick="setActiveTab(this)">Skills</a>
           <a href="#food-container" onClick="setActiveTab(this)">Food</a>
           <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
         </div>
@@ -23,11 +25,65 @@
 
         <!-- Basic Personal Information -->
         <div id="about-container" class="container">
-          <h3>About Me</h3>
+          <h2>About Me</h2>
           <img id="profile-pic" src="/images/cindy.JPEG" />
           <p>
-              Hi! I'm a Computer Science student at the University of Pennsylvania. I'm also a former Speech and Debater, bagel enthusiast, loyal friend, baker, and artist (or at least I like to think so). Welcome!
+              Hi! I'm a student at the University of Pennsylvania. I'm pursuing a Bachelor of Science in Engineering (BSE) in Computer Science and a Master of Science in Engineering (MSE) in Systems Engineering!
+              I'm also a former Speech and Debater, bagel enthusiast, loyal friend, baker, and artist (or at least I like to think so). Welcome!
           </p >
+          <p>
+            Side note: this page is a little more ~fun~ and is being used largely to showcase my love for cooking. If you want to see some of my work, head on over to <a href="https://www.cindyhao.com"target=”_blank” id="bio-link"> my other website!</a>
+          </p>
+        </div>
+
+        <!-- Skills Container -->
+        <div id="skills-container" class="container">
+          <h2>My Skills</h2>
+          <p>For good measure, I've included some technical as well as non-technical skills about myself.</p>
+          <div class="skills">
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Java</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="90"></div>
+                </div>
+            </div>  
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Javascript</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="80"></div>
+                </div>
+            </div>
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">HTML/CSS</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="80"></div>
+                </div>
+            </div>
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Python</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="75"></div>
+                </div>
+            </div>
+          <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Public Speaking</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="85"></div>
+                </div>
+            </div>
+            <!-- Skill -->
+            <div class="skill">
+              <div class="skill-name">Self-Deprecation</div>
+                <div class="skill-bar">
+                  <div class="skill-per" per="92"></div>
+                </div>
+            </div>
+          </div>
         </div>
 
         <div id="life-container" class="container">
@@ -81,11 +137,12 @@
 
         <!-- Information about food!! -->
         <div id="food-container" class="container">
-          <h3>My Food</h3>
-          <p>Food is such an important part of who I am! I love cooking and trying new recipes. Here are just a few things I've made recently!</p>
+          <h2>My Food</h2>
+          <p>I honestly just love food and probably spend too long in the kitchen every day. Here are a few things I've made recently!</p>
           
           <!-- Sandwiches -->
-          <h5>For some reason, I just really love bread. Sandwiches have become a product of that.</h5>
+          <h3 class="food-subtitle">Sandwiches</h3>
+          <p>I love bread. Sandwiches have become a product of that.</p>
           <div id="sandwich-container">
             <div class="img-row">
               <div class="img-col">
@@ -104,7 +161,8 @@
           </div>
           
           <!-- Sweet Food -->
-          <h5>Of course, you can't end a day without dessert. Here are some of my favorites.</h5>
+          <h3 class="food-subtitle">Dessert</h3>
+          <p>I really believe that you can't end a day without dessert. Here are some of my favorites.</p>
           <div id="sweets-container">
             <div class="img-row">
               <div class="img-col">
@@ -119,7 +177,8 @@
           </div>
           
           <!-- Pancakes -->
-          <h5>How could I forget the most important meal of the day!</h5>
+          <h3 class="food-subtitle">Pancakes</h3>
+          <p>There was a period of time that I would always make pancakes in the morning. Unfortunately, it takes a long time to make soo that trend has kind of evaporated.</p>
           <div id="pancake-container">
             <div class="img-row">
               <div class="img-col">
@@ -135,12 +194,20 @@
 
         <!-- Information about contacting -->
         <div id="contact-container" class="container">
-          <h3>Contact</h3>
-          <p>Here are some other places you can find me ;)</p>
+          <h2>Contact</h2>
+          <p>Here are some other places you can find me ;) Looking forward to seeing you there!</p>
           <a href="https://github.com/haoyxc" target=”_blank” class="link" >Github</a>
           <a href="https://www.linkedin.com/in/cindyhao/"target=”_blank”  class="link">LinkedIn</a>
           <a href="https://www.cindyhao.com"target=”_blank”  class="link">Another website!</a>
         </div>
+        
+        <!-- Container with button to get a message -->
+        <div id="comment-container" class="container">
+          <h2>Message</h2>
+          <button onClick="fetchFromData()">clickme</button>
+          <div id="secret-message"></div>
+        </div>
+        
       </div>
     </div> 
     
