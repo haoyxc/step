@@ -213,3 +213,14 @@ h2, h3 {
   background: var(--contrast);
   color: black;
 }
+
+/* COMMENTS STYLES */
+#all-messages {
+  list-style: none;
+  text-align: left; 
+}
+#all-messages .msg {
+  background: var(--primary-dark); 
+  padding: 15px;
+  border-radius: 15px; 
+}
