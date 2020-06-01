@@ -52,6 +52,7 @@ function loadSkills () {
 }
 
 /**
+ * Makes a request to /data and gets the response
  */
  async function fetchFromData() {
   const response = await fetch('/data');
