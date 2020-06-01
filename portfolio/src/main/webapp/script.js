@@ -56,6 +56,19 @@ function loadSkills () {
  */
  async function fetchFromData() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('secret-message').innerText = quote; 
+  // This gives a list of messages
+  const msgs = await response.json();
+
+  // Clear the child elements from the div to avoid duplicating
+  $("#all-messages").empty(); 
+
+  const root = document.getElementById("all-messages");
+
+  // Adds all of the messages to a div
+  msgs.forEach(m => {
+    const node = document.createElement("p"); 
+    node.className = "msg"; 
+    node.textContent = m;
+    root.appendChild(node); 
+  }); 
  }
