@@ -51,3 +51,10 @@ function loadSkills () {
   });
 }
 
+/**
+ */
+ async function fetchFromData() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('secret-message').innerText = quote; 
+ }
