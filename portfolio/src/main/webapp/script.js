@@ -56,6 +56,13 @@ function loadSkills () {
  */
  async function fetchFromData() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('secret-message').innerText = quote; 
+  // This gives a list of messages
+  const msgs = await response.json();
+  console.log(msgs); 
+
+  // Adds all of the messages to an unordered list
+  msgs.forEach(m => {
+    const node = `<p class="msg">${m}</p>`; 
+    $("#all-messages").append(node); 
+  }); 
  }
