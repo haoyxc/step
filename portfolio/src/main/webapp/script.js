@@ -96,6 +96,6 @@ function loadSkills () {
   // Adds all of the messages to an unordered list
   msgs.forEach(m => {
     const node = `<li class="msg">${m}</li>`; 
-    $("#secret-message").append(node); 
+    $("#all-messages").append(node); 
   }); 
  }
