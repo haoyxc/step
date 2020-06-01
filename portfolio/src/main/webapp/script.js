@@ -68,7 +68,7 @@ function loadSkills () {
   msgs.forEach(m => {
     const node = document.createElement("p"); 
     node.className = "msg"; 
-    node.innerHTML = m;
+    node.textContent = m;
     root.appendChild(node); 
   }); 
  }
