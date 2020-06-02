@@ -44,15 +44,17 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
+    String name = request.getParameter("form-name"); 
+    long timestamp = System.currentTimeMillis();
     
     Entity commentEntity = new Entity("Comment");
+
     commentEntity.setProperty("content", text); 
+    commentEntity.setProperty("name", name); 
+    commentEntity.setProperty("time", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-
-    // client does not allow for an empty submission, so can directly add to data
-    data.add(text); 
     
     response.sendRedirect("/"); 
   }

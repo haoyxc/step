@@ -87,9 +87,9 @@ function hideComments() {
  * Sets the submit button to disabled if input is empty, enabled otherwise
  */
 function configureBtn() {
-  if ($("#form-comment-input").val() === "") {
+  if ($("#form-comment-input").val() === "" || $("#form-name-input").val() === "" ) {
     $("#form-submit-btn").prop("disabled", true); 
   } else {
     $("#form-submit-btn").prop("disabled", false); 
-  }
+  }; 
 }; 
