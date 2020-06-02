@@ -167,6 +167,12 @@
         <!-- Container with button to get a message -->
         <div id="comment-container" class="container">
           <h2>Comments</h2>
+          <select id="num-comments">
+            <option value=1 selected>1</option>
+            <option value=3>3</option>
+            <option value=5>5</option>
+            <option value=10>10</option>
+          </select>
           <button onClick="fetchFromData()" id="get-msg-btn">Show Comments</button>
           <button onClick="hideComments()" class="invisible" id="hide-msg-btn">Hide Comments</button>
           <div id="all-messages"></div>
