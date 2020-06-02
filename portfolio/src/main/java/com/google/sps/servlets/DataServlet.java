@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  List<String> data = new ArrayList<>(); 
+  private final List<String> data = new ArrayList<>(); 
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,15 +44,16 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
+    
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("content", text); 
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
-    // if (text.length() != 0) {
-    //   data.add(text); 
-    // }
+    // client does not allow for an empty submission, so can directly add to data
+    data.add(text); 
+    
     response.sendRedirect("/"); 
   }
 }
