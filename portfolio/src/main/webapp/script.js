@@ -71,6 +71,9 @@ async function fetchFromData() {
   $("#hide-msg-btn").removeClass("invisible"); 
 };
 
+/**
+ * Creates a comment element with the content, name of commenter, and date
+ */
 function createCommentElement(comment) {
   const node = document.createElement("div");
   node.className = "msg"; 
