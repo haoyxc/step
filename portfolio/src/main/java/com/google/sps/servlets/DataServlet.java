@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
@@ -29,11 +32,25 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
-  private final List<String> data = new ArrayList<>(); 
-
+  private List<Comment> data;
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+     data = new ArrayList<>(); 
+    
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      String content = (String) entity.getProperty("content");
+      String name = (String) entity.getProperty("name");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      Comment comment = new Comment(id, content, name, timestamp);
+      data.add(comment);
+    }
+
     Gson gson = new Gson();
     String json = gson.toJson(data); 
 
@@ -51,11 +68,26 @@ public class DataServlet extends HttpServlet {
 
     commentEntity.setProperty("content", text); 
     commentEntity.setProperty("name", name); 
-    commentEntity.setProperty("time", timestamp);
+    commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
     
     response.sendRedirect("/"); 
+  }
+
+  /** Inner class that stores a comment object*/
+  class Comment {
+    private final long id;
+    private final String content;
+    private final String name;
+    private final long timestamp;
+    
+    public Comment(long id, String content, String name, long timestamp) {
+      this.id = id;
+      this.content = content;
+      this.name = name;
+      this.timestamp = timestamp; 
+    }
   }
 }
