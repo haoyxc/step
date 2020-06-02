@@ -4,7 +4,7 @@
 :root {
   --primary: #ffcece;
   --primary-dark: #ffc1c8;
-  --accent: #ffe3b0;
+  --light: #dcdcdc;
   --contrast: #8ed6ff;  
 }
 
@@ -234,4 +234,19 @@ h2, h3 {
   background: var(--primary-dark); 
   padding: 15px;
   border-radius: 15px; 
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
 } 
+
+.comment-content {
+  background: var(--light);
+  margin: 10px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.comment-name {
+  margin: 0px;
+  font-size: .8rem;
+}

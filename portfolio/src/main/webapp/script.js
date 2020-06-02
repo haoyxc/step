@@ -56,22 +56,45 @@ function loadSkills () {
  */
 async function fetchFromData() {
   const response = await fetch('/data');
+  
   // This gives a list of messages
-  const msgs = await response.json();
+  const comments = await response.json();
 
   const root = document.getElementById("all-messages");
 
   // Adds all of the messages to a div
-  msgs.forEach(m => {
-    const node = document.createElement("p"); 
-    node.className = "msg"; 
-    node.textContent = m;
-    root.appendChild(node); 
+  comments.forEach(c => {
+    root.appendChild(createCommentElement(c)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
   $("#hide-msg-btn").removeClass("invisible"); 
 };
+
+function createCommentElement(comment) {
+  const node = document.createElement("div");
+  node.className = "msg"; 
+
+  const contentElement = document.createElement('span');
+  contentElement.className = "comment-content";
+  contentElement.innerText = comment.content;
+
+  const nameElement = document.createElement('p');
+  nameElement.className = "comment-name";
+  nameElement.textContent = `${comment.name} at ${parseTimeforDisplay(comment.timestamp)}`;
+
+  node.appendChild(contentElement);
+  node.appendChild(nameElement);
+  return node;
+}
+
+/**
+ * Takes in a long date representation and converts it to a more readable time
+ */
+function parseTimeforDisplay(time) {
+  const date = new Date(time); //format: Tue Jun 02 2020 14:11:39 GMT-0500 (Central Daylight Time) {}
+  return date.toDateString();
+}
 
 /**
  * Hides the comments when displayed
