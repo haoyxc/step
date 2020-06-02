@@ -26,7 +26,7 @@ function setActiveTab(btn) {
 
   //Add "active" class to the clicked element
   btn.classList.add('active'); 
-}
+};
 
 /**
  * Load skills bar in skills container
@@ -49,18 +49,15 @@ function loadSkills () {
       }
     );
   });
-}
+};
 
 /**
  * Makes a request to /data and gets the response
  */
- async function fetchFromData() {
+async function fetchFromData() {
   const response = await fetch('/data');
   // This gives a list of messages
   const msgs = await response.json();
-
-  // Clear the child elements from the div to avoid duplicating
-  $("#all-messages").empty(); 
 
   const root = document.getElementById("all-messages");
 
@@ -71,4 +68,28 @@ function loadSkills () {
     node.textContent = m;
     root.appendChild(node); 
   }); 
- }
+
+  $("#get-msg-btn").addClass("invisible"); 
+  $("#hide-msg-btn").removeClass("invisible"); 
+};
+
+/**
+ * Hides the comments when displayed
+ */
+function hideComments() {
+  // Clear the child elements from comments div
+  $("#all-messages").empty(); 
+  $("#get-msg-btn").removeClass("invisible"); 
+  $("#hide-msg-btn").addClass("invisible");
+ };
+
+/**
+ * Sets the submit button to disabled if input is empty, enabled otherwise
+ */
+function configureBtn() {
+  if (document.getElementById("form-comment-input").value === "") {
+    document.getElementById("form-submit-btn").disabled = true;
+  } else {
+    document.getElementById("form-submit-btn").disabled = false;
+  }
+}; 

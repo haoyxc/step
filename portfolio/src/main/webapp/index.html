@@ -151,11 +151,21 @@
           <a href="https://www.linkedin.com/in/cindyhao/"target=”_blank”  class="link">LinkedIn</a>
           <a href="https://www.cindyhao.com"target=”_blank”  class="link">Another website!</a>
         </div>
+
+        <!-- Form to Submit Comment -->
+        <div id="form-container" class="container">
+          <form id="comment-form" action="/data" method="POST">
+            <label for="form-comment-input">Comment</label>
+            <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
+            <input type="submit" value="Comment!" id="form-submit-btn" disabled/>
+          </form>
+        </div>
         
         <!-- Container with button to get a message -->
         <div id="comment-container" class="container">
           <h2>Message</h2>
-          <button onClick="fetchFromData()">clickme</button>
+          <button onClick="fetchFromData()" id="get-msg-btn">Show</button>
+          <button onClick="hideComments()" class="invisible" id="hide-msg-btn">Hide</button>
           <div id="all-messages"></div>
         </div>
         

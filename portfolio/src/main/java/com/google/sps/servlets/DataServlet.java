@@ -27,17 +27,24 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private final List<String> data = new ArrayList<>(); 
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    List<String> data = new ArrayList<>(); 
-    data.add("peanut");
-    data.add("cashew");
-    data.add("pistachio"); 
-
     Gson gson = new Gson();
     String json = gson.toJson(data); 
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String text = request.getParameter("form-comment"); 
+    
+    // client does not allow for an empty submission, so can directly add to data
+    data.add(text); 
+    
+    response.sendRedirect("/"); 
   }
 }
