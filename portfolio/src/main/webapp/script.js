@@ -59,9 +59,6 @@ function loadSkills () {
   // This gives a list of messages
   const msgs = await response.json();
 
-  // Clear the child elements from the div to avoid duplicating
-  $("#all-messages").empty(); 
-
   const root = document.getElementById("all-messages");
 
   // Adds all of the messages to a div
@@ -71,4 +68,17 @@ function loadSkills () {
     node.textContent = m;
     root.appendChild(node); 
   }); 
+
+  $("#get-msg-btn").addClass("invisible"); 
+  $("#hide-msg-btn").removeClass("invisible"); 
+ }
+
+ /**
+  * Hides the comments when displayed
+  */
+ function hideComments() {
+  $("#get-msg-btn").removeClass("invisible"); 
+  $("#hide-msg-btn").addClass("invisible");
+  // Clear the child elements from the div to avoid duplicating
+  $("#all-messages").empty(); 
  }

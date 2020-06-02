@@ -16,6 +16,10 @@ h2, h3 {
   margin-bottom: 0; 
 }
 
+.invisible {
+  display: none; 
+}
+
 .container {
   text-align: center;
   background-color: var(--primary); 
