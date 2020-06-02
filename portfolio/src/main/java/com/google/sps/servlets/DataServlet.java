@@ -27,17 +27,25 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  List<String> data = new ArrayList<>(); 
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    List<String> data = new ArrayList<>(); 
-    data.add("peanut");
-    data.add("cashew");
-    data.add("pistachio"); 
-
     Gson gson = new Gson();
     String json = gson.toJson(data); 
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    System.out.println("In Do Post");
+    // Get the text
+    String text = request.getParameter("form-comment"); 
+    System.out.println(text);
+    data.add(text); 
+
+    response.sendRedirect("/");    
   }
 }
