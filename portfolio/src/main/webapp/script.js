@@ -54,7 +54,7 @@ function loadSkills () {
 /**
  * Makes a request to /data and gets the response
  */
- async function fetchFromData() {
+async function fetchFromData() {
   const response = await fetch('/data');
   // This gives a list of messages
   const msgs = await response.json();
@@ -71,14 +71,25 @@ function loadSkills () {
 
   $("#get-msg-btn").addClass("invisible"); 
   $("#hide-msg-btn").removeClass("invisible"); 
- };
+};
 
- /**
-  * Hides the comments when displayed
-  */
- function hideComments() {
+/**
+ * Hides the comments when displayed
+ */
+function hideComments() {
   // Clear the child elements from comments div
   $("#all-messages").empty(); 
   $("#get-msg-btn").removeClass("invisible"); 
   $("#hide-msg-btn").addClass("invisible");
  };
+
+/**
+ * Sets the submit button to disabled if input is empty, enabled otherwise
+ */
+function configureBtn() {
+  if (document.getElementById("form-comment-input").value === "") {
+    document.getElementById("form-submit-btn").disabled = true;
+  } else {
+    document.getElementById("form-submit-btn").disabled = false;
+  }
+}; 
