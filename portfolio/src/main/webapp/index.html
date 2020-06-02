@@ -154,9 +154,9 @@
 
         <!-- Form to Submit Comment -->
         <div id="form-container" class="container">
-          <form id="comment-form" action="/data">
-            <label for="form-comment-box">Comment</label>
-            <input type="text" id="form-comment-input">
+          <form id="comment-form" action="/data" method="POST">
+            <label for="form-comment-input">Comment</label>
+            <input type="text" name="form-comment" id="form-comment-input">
             <input type="submit" value="Comment!"/>
           </form>
         </div>
