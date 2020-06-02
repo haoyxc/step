@@ -27,7 +27,7 @@ import java.util.ArrayList;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  List<String> data = new ArrayList<>(); 
+  private final List<String> data = new ArrayList<>(); 
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
