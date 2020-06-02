@@ -26,7 +26,7 @@ function setActiveTab(btn) {
 
   //Add "active" class to the clicked element
   btn.classList.add('active'); 
-}
+};
 
 /**
  * Load skills bar in skills container
@@ -49,7 +49,7 @@ function loadSkills () {
       }
     );
   });
-}
+};
 
 /**
  * Makes a request to /data and gets the response
@@ -71,14 +71,14 @@ function loadSkills () {
 
   $("#get-msg-btn").addClass("invisible"); 
   $("#hide-msg-btn").removeClass("invisible"); 
- }
+ };
 
  /**
   * Hides the comments when displayed
   */
  function hideComments() {
+  // Clear the child elements from comments div
+  $("#all-messages").empty(); 
   $("#get-msg-btn").removeClass("invisible"); 
   $("#hide-msg-btn").addClass("invisible");
-  // Clear the child elements from the div to avoid duplicating
-  $("#all-messages").empty(); 
- }
+ };
