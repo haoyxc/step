@@ -36,6 +36,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String numParam = request.getParameter("num");
+    
+    if (numParam == null) {
+      response.sendError(400);
+      return;
+    }
+
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
