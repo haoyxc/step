@@ -56,22 +56,41 @@ function loadSkills () {
  */
 async function fetchFromData() {
   const response = await fetch('/data');
+  
   // This gives a list of messages
-  const msgs = await response.json();
+  const comments = await response.json();
 
-  const root = document.getElementById("all-messages");
+  const root = $("#all-messages");
 
   // Adds all of the messages to a div
-  msgs.forEach(m => {
-    const node = document.createElement("p"); 
-    node.className = "msg"; 
-    node.textContent = m;
-    root.appendChild(node); 
+  comments.forEach(c => {
+    root.append(createCommentElement(c)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
   $("#hide-msg-btn").removeClass("invisible"); 
 };
+
+/**
+ * Creates a comment element with the content, name of commenter, and date
+ */
+function createCommentElement(comment) {
+  const node = $("<div></div>");
+  node.addClass("msg");
+
+  const contentElement = $("<span></span>");
+  contentElement.addClass("comment-content");
+  contentElement.text(comment.content);
+
+  const nameElement = $("<p></p>");
+  nameElement.addClass("comment-name");
+  const dateReadable = (new Date(comment.timestamp)).toDateString();
+  nameElement.text(`${comment.name} at ${dateReadable}`);
+
+  node.append(contentElement);
+  node.append(nameElement);
+  return node;
+}
 
 /**
  * Hides the comments when displayed
@@ -87,9 +106,9 @@ function hideComments() {
  * Sets the submit button to disabled if input is empty, enabled otherwise
  */
 function configureBtn() {
-  if (document.getElementById("form-comment-input").value === "") {
-    document.getElementById("form-submit-btn").disabled = true;
+  if ($("#form-comment-input").val() === "" || $("#form-name-input").val() === "" ) {
+    $("#form-submit-btn").prop("disabled", true); 
   } else {
-    document.getElementById("form-submit-btn").disabled = false;
-  }
+    $("#form-submit-btn").prop("disabled", false); 
+  }; 
 }; 
