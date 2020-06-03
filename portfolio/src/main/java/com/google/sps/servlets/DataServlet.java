@@ -78,7 +78,11 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/"); 
   }
 
-  /** Inner class that stores a comment object*/
+  /** Inner class that stores a comment object
+   * id is the Datastore generated id, content is the content of the comment,
+   * name is the name of the user who made the comment, 
+   * and timestamp is the time the comment was made (as a long)
+   */
   class Comment {
     private final long id;
     private final String content;
