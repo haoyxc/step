@@ -17,11 +17,15 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import java.io.IOException;
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Enumeration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,11 +43,15 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
      data = new ArrayList<>(); 
     
+    String numParam = request.getParameter("num");
+    int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
+
+    for (Entity entity : results.asList(FetchOptions.Builder.withLimit(numParsed))) {
       long id = entity.getKey().getId();
       String content = (String) entity.getProperty("content");
       String name = (String) entity.getProperty("name");
