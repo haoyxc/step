@@ -36,12 +36,10 @@ import java.util.ArrayList;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  
-  private List<Comment> data;
-  
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-     data = new ArrayList<>(); 
+    List<Comment> data = new ArrayList<>(); 
     
     String numParam = request.getParameter("num");
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
@@ -72,6 +70,12 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
+
+    if (text == null || name == null) {
+      response.sendError(400);
+      return;
+    }
+
     long timestamp = System.currentTimeMillis();
     
     Entity commentEntity = new Entity("Comment");
@@ -81,12 +85,16 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
-    
+    datastore.put(commentEntity);   
+
     response.sendRedirect("/"); 
   }
 
-  /** Inner class that stores a comment object*/
+  /** Inner class that stores a comment object
+   * id is the Datastore generated id, content is the content of the comment,
+   * name is the name of the user who made the comment, 
+   * and timestamp is the time the comment was made (as a long)
+   */
   class Comment {
     private final long id;
     private final String content;

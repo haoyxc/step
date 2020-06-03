@@ -66,7 +66,7 @@ async function fetchFromData() {
   console.log(comments);
   const numComments = comments.length;
 
-  const root = document.getElementById("all-messages");
+  const root = $("#all-messages");
 
   // Adds all of the messages to a div
   comments.forEach(c => {
@@ -81,28 +81,21 @@ async function fetchFromData() {
  * Creates a comment element with the content, name of commenter, and date
  */
 function createCommentElement(comment) {
-  const node = document.createElement("div");
-  node.className = "msg"; 
+  const node = $("<div></div>");
+  node.addClass("msg");
 
-  const contentElement = document.createElement('span');
-  contentElement.className = "comment-content";
-  contentElement.innerText = comment.content;
+  const contentElement = $("<span></span>");
+  contentElement.addClass("comment-content");
+  contentElement.text(comment.content);
 
-  const nameElement = document.createElement('p');
-  nameElement.className = "comment-name";
-  nameElement.textContent = `${comment.name} at ${parseTimeforDisplay(comment.timestamp)}`;
+  const nameElement = $("<p></p>");
+  nameElement.addClass("comment-name");
+  const dateReadable = (new Date(comment.timestamp)).toDateString();
+  nameElement.text(`${comment.name} at ${dateReadable}`);
 
-  node.appendChild(contentElement);
-  node.appendChild(nameElement);
+  node.append(contentElement);
+  node.append(nameElement);
   return node;
-}
-
-/**
- * Takes in a long date representation and converts it to a more readable time
- */
-function parseTimeforDisplay(time) {
-  const date = new Date(time); //format: Tue Jun 02 2020 14:11:39 GMT-0500 (Central Daylight Time) {}
-  return date.toDateString();
 }
 
 /**
