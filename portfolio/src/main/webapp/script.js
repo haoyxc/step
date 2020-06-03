@@ -84,19 +84,12 @@ function createCommentElement(comment) {
 
   const nameElement = document.createElement('p');
   nameElement.className = "comment-name";
-  nameElement.textContent = `${comment.name} at ${parseTimeforDisplay(comment.timestamp)}`;
+  const dateReadable = (new Date(comment.timestamp)).toDateString();
+  nameElement.textContent = `${comment.name} at ${dateReadable}`;
 
   node.appendChild(contentElement);
   node.appendChild(nameElement);
   return node;
-}
-
-/**
- * Takes in a long date representation and converts it to a more readable time
- */
-function parseTimeforDisplay(time) {
-  const date = new Date(time); //format: Tue Jun 02 2020 14:11:39 GMT-0500 (Central Daylight Time) {}
-  return date.toDateString();
 }
 
 /**
