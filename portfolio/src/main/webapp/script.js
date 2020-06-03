@@ -69,7 +69,7 @@ async function fetchFromData() {
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.append(createCommentElement(c.propertyMap)); 
+    root.append(createCommentElement(c.propertyMap, c.key.id)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
@@ -79,7 +79,7 @@ async function fetchFromData() {
 /**
  * Creates a comment element with the content, name of commenter, and date
  */
-function createCommentElement(comment) {
+function createCommentElement(comment, id) {
   const node = $("<div></div>");
   node.addClass("msg");
 
@@ -92,9 +92,25 @@ function createCommentElement(comment) {
   const dateReadable = (new Date(comment.timestamp)).toDateString();
   nameElement.text(`${comment.name} at ${dateReadable}`);
 
+  const deleteBtn = $("<button></button>");
+  deleteBtn.text("Delete");
+  deleteBtn.on("click", () => {
+    deleteComment(id);
+  })
+
   node.append(contentElement);
   node.append(nameElement);
+  node.append(deleteBtn);
   return node;
+}
+
+/**
+ * Delete
+ */
+function deleteComment(id) {
+  const params = new URLSearchParams();
+  params.append('id', id);
+  fetch('/delete-data', {method: 'POST', body: params});
 }
 
 /**
