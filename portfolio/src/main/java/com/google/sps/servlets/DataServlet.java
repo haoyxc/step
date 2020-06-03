@@ -51,18 +51,18 @@ public class DataServlet extends HttpServlet {
 
     PreparedQuery results = datastore.prepare(query);
 
-    for (Entity entity : results.asList(FetchOptions.Builder.withLimit(numParsed))) {
-      long id = entity.getKey().getId();
-      String content = (String) entity.getProperty("content");
-      String name = (String) entity.getProperty("name");
-      long timestamp = (long) entity.getProperty("timestamp");
+    // for (Entity entity : results.asList(FetchOptions.Builder.withLimit(numParsed))) {
+    //   long id = entity.getKey().getId();
+    //   String content = (String) entity.getProperty("content");
+    //   String name = (String) entity.getProperty("name");
+    //   long timestamp = (long) entity.getProperty("timestamp");
 
-      Comment comment = new Comment(id, content, name, timestamp);
-      data.add(comment);
-    }
+    //   Comment comment = new Comment(id, content, name, timestamp);
+    //   data.add(comment);
+    // }
 
     Gson gson = new Gson();
-    String json = gson.toJson(data); 
+    String json = gson.toJson(results.asList(FetchOptions.Builder.withLimit(numParsed))); 
 
     response.setContentType("application/json;");
     response.getWriter().println(json);

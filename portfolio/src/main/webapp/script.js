@@ -63,13 +63,14 @@ async function fetchFromData() {
   
   // This gives a list of comments
   const comments = await response.json();
+  console.log(comments);
   const numComments = comments.length;
 
   const root = document.getElementById("all-messages");
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.appendChild(createCommentElement(c)); 
+    root.appendChild(createCommentElement(c.propertyMap)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
