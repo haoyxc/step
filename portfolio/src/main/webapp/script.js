@@ -55,22 +55,20 @@ function loadSkills () {
  * Makes a request to /data and gets the response
  */
 async function fetchFromData() {
-  const response = await fetch('/data');
+  const selector = $("#num-comments")[0]; //get the select element
+  const selectedNum = selector.options[selector.selectedIndex].value; //number of comments user wants
+
+  //make request with the number specified
+  const response = await fetch(`/data?num=${selectedNum}`);
   
-  // This gives a list of messages
+  // This gives a list of comments
   const comments = await response.json();
   const numComments = comments.length;
-  const selector = $("#num-comments")[0]; //get the select element
-  const selected = selector.options[selector.selectedIndex].value; //number of comments user wants
-  console.log(selected)
-
-  //the first selected number of comments (most recent first)
-  const commentsNeeded = selected >= numComments ? comments : comments.slice(0, selected);
 
   const root = document.getElementById("all-messages");
 
   // Adds all of the messages to a div
-  commentsNeeded.forEach(c => {
+  comments.forEach(c => {
     root.appendChild(createCommentElement(c)); 
   }); 
 
