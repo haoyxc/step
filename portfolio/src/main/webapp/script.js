@@ -60,11 +60,11 @@ async function fetchFromData() {
   // This gives a list of messages
   const comments = await response.json();
 
-  const root = document.getElementById("all-messages");
+  const root = $("#all-messages");
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.appendChild(createCommentElement(c)); 
+    root.append(createCommentElement(c)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
@@ -75,20 +75,20 @@ async function fetchFromData() {
  * Creates a comment element with the content, name of commenter, and date
  */
 function createCommentElement(comment) {
-  const node = document.createElement("div");
-  node.className = "msg"; 
+  const node = $("<div></div>");
+  node.addClass("msg");
 
-  const contentElement = document.createElement('span');
-  contentElement.className = "comment-content";
-  contentElement.innerText = comment.content;
+  const contentElement = $("<span></span>");
+  contentElement.addClass("comment-content");
+  contentElement.text(comment.content);
 
-  const nameElement = document.createElement('p');
-  nameElement.className = "comment-name";
+  const nameElement = $("<p></p>");
+  nameElement.addClass("comment-name");
   const dateReadable = (new Date(comment.timestamp)).toDateString();
-  nameElement.textContent = `${comment.name} at ${dateReadable}`;
+  nameElement.text(`${comment.name} at ${dateReadable}`);
 
-  node.appendChild(contentElement);
-  node.appendChild(nameElement);
+  node.append(contentElement);
+  node.append(nameElement);
   return node;
 }
 
