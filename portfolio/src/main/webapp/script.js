@@ -63,7 +63,6 @@ async function fetchFromData() {
   
   // This gives a list of comments
   const comments = await response.json();
-  const numComments = comments.length;
 
   const root = $("#all-messages");
 
