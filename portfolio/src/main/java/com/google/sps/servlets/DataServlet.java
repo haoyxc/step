@@ -64,17 +64,20 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
-    long timestamp = System.currentTimeMillis();
-    
-    Entity commentEntity = new Entity("Comment");
 
-    commentEntity.setProperty("content", text); 
-    commentEntity.setProperty("name", name); 
-    commentEntity.setProperty("timestamp", timestamp);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    //only add to Datastore if fields are present
+    if (text != null && name != null) {
+      long timestamp = System.currentTimeMillis();
     
+      Entity commentEntity = new Entity("Comment");
+
+      commentEntity.setProperty("content", text); 
+      commentEntity.setProperty("name", name); 
+      commentEntity.setProperty("timestamp", timestamp);
+
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(commentEntity);   
+    }
     response.sendRedirect("/"); 
   }
 
