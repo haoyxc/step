@@ -38,9 +38,7 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    List<Comment> data = new ArrayList<>(); 
-    
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String numParam = request.getParameter("num");
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
@@ -48,16 +46,6 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
-
-    // for (Entity entity : results.asList(FetchOptions.Builder.withLimit(numParsed))) {
-    //   long id = entity.getKey().getId();
-    //   String content = (String) entity.getProperty("content");
-    //   String name = (String) entity.getProperty("name");
-    //   long timestamp = (long) entity.getProperty("timestamp");
-
-    //   Comment comment = new Comment(id, content, name, timestamp);
-    //   data.add(comment);
-    // }
 
     Gson gson = new Gson();
     String json = gson.toJson(results.asList(FetchOptions.Builder.withLimit(numParsed))); 
@@ -88,24 +76,5 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);   
 
     response.sendRedirect("/"); 
-  }
-
-  /** Inner class that stores a comment object
-   * id is the Datastore generated id, content is the content of the comment,
-   * name is the name of the user who made the comment, 
-   * and timestamp is the time the comment was made (as a long)
-   */
-  class Comment {
-    private final long id;
-    private final String content;
-    private final String name;
-    private final long timestamp;
-    
-    public Comment(long id, String content, String name, long timestamp) {
-      this.id = id;
-      this.content = content;
-      this.name = name;
-      this.timestamp = timestamp; 
-    }
   }
 }

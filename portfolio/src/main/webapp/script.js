@@ -70,7 +70,7 @@ async function fetchFromData() {
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.appendChild(createCommentElement(c.propertyMap)); 
+    root.append(createCommentElement(c.propertyMap)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
