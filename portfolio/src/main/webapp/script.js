@@ -103,12 +103,13 @@ function createCommentElement(comment, id) {
 }
 
 /**
- * Delete
+ * Delete a comment from the Datastore given the id
  */
 function deleteComment(id) {
   const params = new URLSearchParams();
   params.append('id', id);
   fetch('/delete-data', {method: 'POST', body: params});
+  //empty the messages and refetch so the page updates accordingly
   $("#all-messages").empty(); 
   fetchFromData();
 }
