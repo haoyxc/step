@@ -5,6 +5,7 @@
     <title>Cindy Hao</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/fd405735a1.js"></script>
     <script src="script.js"></script>
   </head>
   <body>
@@ -93,7 +94,10 @@
           <p>I honestly just love food and probably spend too long in the kitchen every day. Here are a few things I've made recently!</p>
           
           <!-- Sandwiches -->
-          <h3 class="food-subtitle">Sandwiches</h3>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Sandwiches</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'sandwich-container')"></i>
+          </span>
           <p>I love bread. Sandwiches have become a product of that.</p>
           <div id="sandwich-container">
             <div class="img-row">
@@ -113,7 +117,10 @@
           </div>
           
           <!-- Sweet Food -->
-          <h3 class="food-subtitle">Dessert</h3>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Dessert</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'sweets-container')"></i>
+          </span>
           <p>I really believe that you can't end a day without dessert. Here are some of my favorites.</p>
           <div id="sweets-container">
             <div class="img-row">
@@ -129,7 +136,10 @@
           </div>
           
           <!-- Pancakes -->
-          <h3 class="food-subtitle">Pancakes</h3>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Pancakes</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'pancake-container')"></i>
+          </span>
           <p>There was a period of time that I would always make pancakes in the morning. Unfortunately, it takes a long time to make soo that trend has kind of evaporated.</p>
           <div id="pancake-container">
             <div class="img-row">
@@ -161,7 +171,7 @@
             <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
             <label for="form-name-input">Name</label>
             <input type="text" name="form-name" id="form-name-input" onkeyup="configureBtn()">
-            <input type="submit" value="Comment!" id="form-submit-btn" disabled/>
+            <input type="submit" value="Comment!" id="form-submit-btn" class="form-btn" disabled/>
           </form>
         </div>
         
@@ -174,7 +184,7 @@
             <option value=5>5</option>
             <option value=10>10</option>
           </select>
-          <button onClick="fetchFromData()" id="get-msg-btn">Show Comments</button>
+          <button onClick="fetchFromData()" id="get-msg-btn" class="form-btn">Show Comments</button>
           <button onClick="hideComments()" class="invisible" id="hide-msg-btn">Hide Comments</button>
           <div id="all-messages"></div>
         </div>
