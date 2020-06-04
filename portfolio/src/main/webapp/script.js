@@ -140,3 +140,13 @@ function configureBtn() {
     $("#form-submit-btn").prop("disabled", false); 
   }; 
 }; 
+
+/**
+ * Toggles image display and the direction of the arrow
+ */
+function toggleImgs(element, containerName) {
+  $(`#${containerName}`).toggleClass("invisible");
+  $(element).hasClass("fa-sort-down") ? 
+    $(element).addClass("fa-sort-up").removeClass("fa-sort-down") : 
+    $(element).addClass("fa-sort-down").removeClass("fa-sort-up");
+}

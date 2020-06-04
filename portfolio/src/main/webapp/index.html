@@ -5,6 +5,7 @@
     <title>Cindy Hao</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/fd405735a1.js"></script>
     <script src="script.js"></script>
   </head>
   <body>
@@ -17,6 +18,7 @@
           <a href="#skills-container" onClick="setActiveTab(this)">Skills</a>
           <a href="#food-container" onClick="setActiveTab(this)">Food</a>
           <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
+          <a href="#form-container" onClick="setActiveTab(this)">Comment</a>
         </div>
       </div>
       
@@ -39,7 +41,7 @@
         <!-- Skills Container -->
         <div id="skills-container" class="container">
           <h2>My Skills</h2>
-          <p>For good measure, I've included some technical as well as non-technical skills about myself.</p>
+          <p>Evaluating my own skills is kind of difficult so take this with a grain of salt</p>
           <div class="skills">
             <!-- Skill -->
             <div class="skill">
@@ -92,8 +94,11 @@
           <p>I honestly just love food and probably spend too long in the kitchen every day. Here are a few things I've made recently!</p>
           
           <!-- Sandwiches -->
-          <h3 class="food-subtitle">Sandwiches</h3>
-          <p>I love bread. Sandwiches have become a product of that.</p>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Sandwiches</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'sandwich-container')"></i>
+          </span>
+          <p>Yay! Bread!</p>
           <div id="sandwich-container">
             <div class="img-row">
               <div class="img-col">
@@ -108,12 +113,19 @@
                 <img src="/images/sandwich/s5.jpg"/>
                 <img src="/images/sandwich/s6.jpg"/>
               </div>
+              <div class="img-col">
+                <img src="/images/sandwich/s8.jpg"/>
+                <img src="/images/sandwich/s7.PNG"/>
+              </div>
             </div>
           </div>
           
           <!-- Sweet Food -->
-          <h3 class="food-subtitle">Dessert</h3>
-          <p>I really believe that you can't end a day without dessert. Here are some of my favorites.</p>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Dessert</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'sweets-container')"></i>
+          </span>
+          <p>Sugar, yes, please</p>
           <div id="sweets-container">
             <div class="img-row">
               <div class="img-col">
@@ -128,8 +140,11 @@
           </div>
           
           <!-- Pancakes -->
-          <h3 class="food-subtitle">Pancakes</h3>
-          <p>There was a period of time that I would always make pancakes in the morning. Unfortunately, it takes a long time to make soo that trend has kind of evaporated.</p>
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Pancakes</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'pancake-container')"></i>
+          </span>
+          <p>Stacks on stacks...</p>
           <div id="pancake-container">
             <div class="img-row">
               <div class="img-col">
@@ -138,9 +153,57 @@
               </div>
               <div class="img-col">
                 <img src="/images/pancakes/p3.jpg"/>
+                <img src="/images/pancakes/p4.JPG"/>
               </div>
             </div>
           </div>
+
+          <!-- Toast -->
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Toast</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'toast-container')"></i>
+          </span>
+          <p>A classic!!</p>
+          <div id="toast-container">
+            <div class="img-row">
+              <div class="img-col">
+                <img src="/images/toast/t1.jpg"/>
+                <img src="/images/toast/t2.jpg"/>
+              </div>
+              <div class="img-col">
+                <img src="/images/toast/t3.jpg"/>
+                <img src="/images/toast/t4.jpg"/>
+              </div>
+              <div class="img-col">
+                <img src="/images/toast/t5.jpg"/>
+                <img src="/images/toast/t6.jpg"/>
+              </div>
+              <div class="img-col">
+                <img src="/images/toast/t7.jpg"/>
+                <img src="/images/toast/t8.jpg"/>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bowls -->
+          <span class="food-group-title">
+            <h3 class="food-subtitle">Bowls</h3>
+            <i class="fa fa-sort-down" onClick="toggleImgs(this, 'bowl-container')"></i>
+          </span>
+          <p>Just some good stuff mixed together.</p>
+          <div id="bowl-container">
+            <div class="img-row">
+              <div class="img-col">
+                <img src="/images/bowls/b1.jpg"/>
+                <img src="/images/bowls/b2.jpg"/>
+              </div>
+              <div class="img-col">
+                <img src="/images/bowls/b3.jpg"/>
+                <img src="/images/bowls/b4.jpg"/>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- Information about contacting -->
@@ -160,7 +223,7 @@
             <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
             <label for="form-name-input">Name</label>
             <input type="text" name="form-name" id="form-name-input" onkeyup="configureBtn()">
-            <input type="submit" value="Comment!" id="form-submit-btn" disabled/>
+            <input type="submit" value="Comment!" id="form-submit-btn" class="form-btn" disabled/>
           </form>
         </div>
         
@@ -173,7 +236,7 @@
             <option value=5>5</option>
             <option value=10>10</option>
           </select>
-          <button onClick="fetchFromData()" id="get-msg-btn">Show Comments</button>
+          <button onClick="fetchFromData()" id="get-msg-btn" class="form-btn">Show Comments</button>
           <button onClick="hideComments()" class="invisible" id="hide-msg-btn">Hide Comments</button>
           <div id="all-messages"></div>
         </div>
