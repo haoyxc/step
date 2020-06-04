@@ -24,14 +24,10 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Enumeration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List; 
-import java.util.ArrayList; 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -40,6 +36,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String numParam = request.getParameter("num");
+    
+    if (numParam == null) {
+      response.sendError(400);
+      return;
+    }
+
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
