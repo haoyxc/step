@@ -76,6 +76,7 @@ async function fetchFromData() {
 
 /**
  * Creates a comment element with the content, name of commenter, and date
+ * as well as a button for user to remove the comment
  */
 function createCommentElement(comment, id) {
   const node = $("<div></div>");
