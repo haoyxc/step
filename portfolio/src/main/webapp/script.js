@@ -92,8 +92,8 @@ function createCommentElement(comment, id) {
 
   const deleteBtn = $("<button></button>");
   deleteBtn.text("Delete");
-  deleteBtn.on("click", () => {
-    deleteComment(id);
+  deleteBtn.on("click", async () => {
+    await deleteComment(id);
   })
 
   node.append(contentElement);
@@ -103,15 +103,20 @@ function createCommentElement(comment, id) {
 }
 
 /**
- * Delete a comment from the Datastore given the id
+ * Delete a comment from the Datastore given the id. Alerts the user if something goes wrong and comment cannot be deleted.
  */
-function deleteComment(id) {
+async function deleteComment(id) {
   const params = new URLSearchParams();
   params.append('id', id);
-  fetch('/delete-data', {method: 'POST', body: params});
+  const resp = await fetch('/delete-data', {method: 'POST', body: params});
+  if (!resp.ok) {
+    alert("AH YIKES! Cannot delete comment");
+    return;
+  }
+
   //empty the messages and refetch so the page updates accordingly
   $("#all-messages").empty(); 
-  fetchFromData();
+  await fetchFromData();
 }
 
 /**
