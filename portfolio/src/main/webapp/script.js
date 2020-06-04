@@ -67,7 +67,7 @@ async function fetchFromData() {
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.append(createCommentElement(c.propertyMap)); 
+    root.append(createCommentElement(c.propertyMap, c.key.id)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
@@ -76,8 +76,9 @@ async function fetchFromData() {
 
 /**
  * Creates a comment element with the content, name of commenter, and date
+ * as well as a button for user to remove the comment
  */
-function createCommentElement(comment) {
+function createCommentElement(comment, id) {
   const node = $("<div></div>");
   node.addClass("msg");
 
@@ -90,9 +91,33 @@ function createCommentElement(comment) {
   const dateReadable = (new Date(comment.timestamp)).toDateString();
   nameElement.text(`${comment.name} at ${dateReadable}`);
 
+  const deleteBtn = $("<button></button>");
+  deleteBtn.text("Delete");
+  deleteBtn.on("click", async () => {
+    await deleteComment(id);
+  })
+
   node.append(contentElement);
   node.append(nameElement);
+  node.append(deleteBtn);
   return node;
+}
+
+/**
+ * Delete a comment from the Datastore given the id. Alerts the user if something goes wrong and comment cannot be deleted.
+ */
+async function deleteComment(id) {
+  const params = new URLSearchParams();
+  params.append('id', id);
+  const resp = await fetch('/delete-data', {method: 'POST', body: params});
+  if (!resp.ok) {
+    alert("AH YIKES! Cannot delete comment");
+    return;
+  }
+
+  //empty the messages and refetch so the page updates accordingly
+  $("#all-messages").empty(); 
+  await fetchFromData();
 }
 
 /**
