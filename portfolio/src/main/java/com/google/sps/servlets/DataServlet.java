@@ -17,42 +17,40 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import java.io.IOException;
 import com.google.gson.Gson;
+import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List; 
-import java.util.ArrayList; 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    List<Comment> data = new ArrayList<>(); 
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+    String numParam = request.getParameter("num");
     
+    if (numParam == null) {
+      response.sendError(400);
+      return;
+    }
+
+    int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
-    for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
-      String content = (String) entity.getProperty("content");
-      String name = (String) entity.getProperty("name");
-      long timestamp = (long) entity.getProperty("timestamp");
-
-      Comment comment = new Comment(id, content, name, timestamp);
-      data.add(comment);
-    }
 
     Gson gson = new Gson();
-    String json = gson.toJson(data); 
+    String json = gson.toJson(results.asList(FetchOptions.Builder.withLimit(numParsed))); 
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -80,24 +78,5 @@ public class DataServlet extends HttpServlet {
     datastore.put(commentEntity);   
 
     response.sendRedirect("/"); 
-  }
-
-  /** Inner class that stores a comment object
-   * id is the Datastore generated id, content is the content of the comment,
-   * name is the name of the user who made the comment, 
-   * and timestamp is the time the comment was made (as a long)
-   */
-  class Comment {
-    private final long id;
-    private final String content;
-    private final String name;
-    private final long timestamp;
-    
-    public Comment(long id, String content, String name, long timestamp) {
-      this.id = id;
-      this.content = content;
-      this.name = name;
-      this.timestamp = timestamp; 
-    }
   }
 }

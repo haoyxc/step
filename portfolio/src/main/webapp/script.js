@@ -55,16 +55,19 @@ function loadSkills () {
  * Makes a request to /data and gets the response
  */
 async function fetchFromData() {
-  const response = await fetch('/data');
+  const selectedNum = $("#num-comments").val(); //the number of comments the user wants
+
+  //make request with the number specified
+  const response = await fetch(`/data?num=${selectedNum}`);
   
-  // This gives a list of messages
+  // This gives a list of comments
   const comments = await response.json();
 
   const root = $("#all-messages");
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.append(createCommentElement(c)); 
+    root.append(createCommentElement(c.propertyMap)); 
   }); 
 
   $("#get-msg-btn").addClass("invisible"); 
