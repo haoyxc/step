@@ -49,7 +49,7 @@ public class DataServlet extends HttpServlet {
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     if (!queryParam.equals("")) {
-      query.addFilter("content", Query.FilterOperator.IN, queryParam);
+      query.addFilter("name", Query.FilterOperator.EQUAL, queryParam);
     }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
