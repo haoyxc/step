@@ -155,7 +155,7 @@ function toggleImgs(element, containerName) {
 /**
  * Checks the login status of the user. Displays the form only if user is logged in
  */
-async function checkLogin() {
+async function checkLogin() { 
   const resp = await fetch('/login');
   const json = await resp.json();
   if (json) {
