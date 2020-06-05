@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
       String userEmail = userService.getCurrentUser().getEmail();
       json = gson.toJson(userEmail);
     } else {
-      json = gson.toJson(null);
+      json = gson.toJson("");
     }
     response.setContentType("application/json");
     response.getWriter().println(json);
