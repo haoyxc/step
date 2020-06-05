@@ -53,6 +53,7 @@ function loadSkills () {
 
 /**
  * Makes a request to /data and gets the response
+ * if stay is true, then the buttons won't update
  */
 async function fetchFromData(stay) {
   const selectedNum = $("#num-comments").val(); //the number of comments the user wants
