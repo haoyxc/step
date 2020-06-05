@@ -54,7 +54,7 @@ function loadSkills () {
 /**
  * Makes a request to /data and gets the response
  */
-async function fetchFromData() {
+async function fetchFromData(stay) {
   const selectedNum = $("#num-comments").val(); //the number of comments the user wants
   const query = $("#comment-query-input").val(); //name of user to look for
 
@@ -72,8 +72,10 @@ async function fetchFromData() {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
   }); 
 
-  $("#get-msg-btn").addClass("invisible"); 
-  $("#hide-msg-btn").removeClass("invisible"); 
+  if (!stay) {
+    $("#get-msg-btn").addClass("invisible"); 
+    $("#hide-msg-btn").removeClass("invisible"); 
+  }
 };
 
 /**
@@ -151,4 +153,15 @@ function toggleImgs(element, containerName) {
   $(element).hasClass("fa-sort-down") ? 
     $(element).addClass("fa-sort-up").removeClass("fa-sort-down") : 
     $(element).addClass("fa-sort-down").removeClass("fa-sort-up");
+}
+
+/**
+ * Updates the message display based on query parameters if already displayed
+ */
+function correctDisplay() {
+  //only relevant if messages are already showing
+  if ($("#get-msg-btn").hasClass("invisible")) {
+    $("#all-messages").empty(); 
+    fetchFromData(true);
+  }
 }
