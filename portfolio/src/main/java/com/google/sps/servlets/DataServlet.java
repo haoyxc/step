@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that gets comments and posts comments*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -38,7 +38,6 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String numParam = request.getParameter("num");
     String queryParam = request.getParameter("query");
-    System.out.println(queryParam);
     
     if (numParam == null || queryParam == null) {
       response.sendError(400);
@@ -48,8 +47,9 @@ public class DataServlet extends HttpServlet {
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    
     if (!queryParam.equals("")) {
-      query.addFilter("name", Query.FilterOperator.EQUAL, queryParam);
+      query.addFilter("name", Query.FilterOperator.EQUAL, queryParam); //filter by name of commenter
     }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
