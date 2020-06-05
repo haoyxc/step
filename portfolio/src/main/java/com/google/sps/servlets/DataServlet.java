@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -36,8 +37,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     String numParam = request.getParameter("num");
+    String queryParam = request.getParameter("query");
+    System.out.println(queryParam);
     
-    if (numParam == null) {
+    if (numParam == null || queryParam == null) {
       response.sendError(400);
       return;
     }
@@ -45,6 +48,9 @@ public class DataServlet extends HttpServlet {
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    if (!queryParam.equals("")) {
+      query.addFilter("content", Query.FilterOperator.IN, queryParam);
+    }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
