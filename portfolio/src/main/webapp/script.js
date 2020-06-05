@@ -56,9 +56,12 @@ function loadSkills () {
  */
 async function fetchFromData() {
   const selectedNum = $("#num-comments").val(); //the number of comments the user wants
+  const query = $("#comment-query-input").val();
 
   //make request with the number specified
-  const response = await fetch(`/data?num=${selectedNum}`);
+  const url = `/data?num=${selectedNum}&query=${query}`;
+  console.log(url);
+  const response = await fetch(url);
   
   // This gives a list of comments
   const comments = await response.json();
