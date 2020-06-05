@@ -158,7 +158,6 @@ function toggleImgs(element, containerName) {
 async function checkLogin() {
   const resp = await fetch('/login');
   const json = await resp.json();
-  console.log(json);
   if (json) {
     $("#form-container").removeClass("invisible");
   }
