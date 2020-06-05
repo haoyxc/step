@@ -81,7 +81,8 @@ async function fetchFromData(stay) {
 
 /**
  * Creates a comment element with the content, name of commenter, and date
- * as well as a button for user to remove the comment
+ * as well as a button for user to remove the comment. This is intended for if the 
+ * number of comments or name queried changes, and not when the "Show" button is clicked.
  */
 function createCommentElement(comment, id) {
   const node = $("<div></div>");
