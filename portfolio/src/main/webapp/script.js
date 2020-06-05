@@ -52,31 +52,57 @@ function loadSkills () {
 };
 
 /**
+ * Function gets called with click of "Show Messages" button
+ */
+async function onShowBtnClick () {
+  await fetchFromData();
+  replaceShowWithHideBtn();
+}
+
+/**
  * Makes a request to /data and gets the response
  */
 async function fetchFromData() {
   const selectedNum = $("#num-comments").val(); //the number of comments the user wants
+  const query = $("#comment-query-input").val(); //name of user to look for
 
   //make request with the number specified
-  const response = await fetch(`/data?num=${selectedNum}`);
+  const url = `/data?num=${selectedNum}&query=${query}`;
+  const response = await fetch(url);
   
   // This gives a list of comments
   const comments = await response.json();
 
   const root = $("#all-messages");
 
+  // Tells the user if there's no comments
+  if (comments.length === 0) {
+    const node = $("<div></div>");
+    node.addClass("msg");
+    const contentElement = $("<span></span>");
+    contentElement.text("Sorry! Nothing to show here");
+    node.append(contentElement);
+    root.append(node);
+  }
+
   // Adds all of the messages to a div
   comments.forEach(c => {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
   }); 
+};
 
+/** 
+ * Replace "Show Messages" button with "Hide Messages" button
+ */
+function replaceShowWithHideBtn() {
   $("#get-msg-btn").addClass("invisible"); 
   $("#hide-msg-btn").removeClass("invisible"); 
-};
+}
 
 /**
  * Creates a comment element with the content, name of commenter, and date
- * as well as a button for user to remove the comment
+ * as well as a button for user to remove the comment. This is intended for if the 
+ * number of comments or name queried changes, and not when the "Show" button is clicked.
  */
 function createCommentElement(comment, id) {
   const node = $("<div></div>");
@@ -149,4 +175,15 @@ function toggleImgs(element, containerName) {
   $(element).hasClass("fa-sort-down") ? 
     $(element).addClass("fa-sort-up").removeClass("fa-sort-down") : 
     $(element).addClass("fa-sort-down").removeClass("fa-sort-up");
+}
+
+/**
+ * Updates the message display based on query parameters if already displayed
+ */
+function correctDisplay() {
+  //only relevant if messages are already showing
+  if ($("#get-msg-btn").hasClass("invisible")) {
+    $("#all-messages").empty(); 
+    fetchFromData();
+  }
 }

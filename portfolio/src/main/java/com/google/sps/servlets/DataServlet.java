@@ -22,6 +22,7 @@ import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -29,15 +30,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that gets comments and posts comments */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+    // Gets the latest number of comments posted by the name in the queryParam
     String numParam = request.getParameter("num");
+    String queryParam = request.getParameter("query");
     
-    if (numParam == null) {
+    if (numParam == null || queryParam == null) {
       response.sendError(400);
       return;
     }
@@ -45,6 +48,10 @@ public class DataServlet extends HttpServlet {
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    
+    if (!queryParam.isEmpty()) {
+      query.addFilter("name", Query.FilterOperator.EQUAL, queryParam); //filter by name of commenter
+    }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
