@@ -153,13 +153,13 @@ function toggleImgs(element, containerName) {
 }
 
 /**
- * Checks the login status of the user. If the user isn't logged in, hides the comment form
+ * Checks the login status of the user. Displays the form only if user is logged in
  */
 async function checkLogin() {
   const resp = await fetch('/login');
   const json = await resp.json();
   console.log(json);
-  if (!json) {
-    $("#form-container").addClass("invisible");
+  if (json) {
+    $("#form-container").removeClass("invisible");
   }
 }
