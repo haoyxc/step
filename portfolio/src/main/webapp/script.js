@@ -68,6 +68,16 @@ async function fetchFromData(stay) {
 
   const root = $("#all-messages");
 
+  // Tells the user if there's no comments
+  if (comments.length === 0) {
+    const node = $("<div></div>");
+    node.addClass("msg");
+    const contentElement = $("<span></span>");
+    contentElement.text("Sorry! Nothing to show here");
+    node.append(contentElement);
+    root.append(node);
+  }
+
   // Adds all of the messages to a div
   comments.forEach(c => {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
