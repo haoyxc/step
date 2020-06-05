@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
+  /**
+   * returns login status: either null if not logged in or a string with their email
+  */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
     Gson gson = new Gson();
     String json;
     UserService userService = UserServiceFactory.getUserService();
@@ -24,6 +25,7 @@ public class LoginServlet extends HttpServlet {
     } else {
       json = gson.toJson(null);
     }
+    response.setContentType("application/json");
     response.getWriter().println(json);
   }
 }
