@@ -52,10 +52,18 @@ function loadSkills () {
 };
 
 /**
+ * Function gets called with click of "Show Messages" button
+ */
+async function onShowBtnClick () {
+  await fetchFromData();
+  replaceShowWithHideBtn();
+}
+
+/**
  * Makes a request to /data and gets the response
  * if stay is true, then the buttons won't update
  */
-async function fetchFromData(stay) {
+async function fetchFromData() {
   const selectedNum = $("#num-comments").val(); //the number of comments the user wants
   const query = $("#comment-query-input").val(); //name of user to look for
 
@@ -82,12 +90,15 @@ async function fetchFromData(stay) {
   comments.forEach(c => {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
   }); 
-
-  if (!stay) {
-    $("#get-msg-btn").addClass("invisible"); 
-    $("#hide-msg-btn").removeClass("invisible"); 
-  }
 };
+
+/** 
+ * Replace "Show Messages" button with "Hide Messages" button
+ */
+function replaceShowWithHideBtn() {
+  $("#get-msg-btn").addClass("invisible"); 
+  $("#hide-msg-btn").removeClass("invisible"); 
+}
 
 /**
  * Creates a comment element with the content, name of commenter, and date
@@ -174,6 +185,6 @@ function correctDisplay() {
   //only relevant if messages are already showing
   if ($("#get-msg-btn").hasClass("invisible")) {
     $("#all-messages").empty(); 
-    fetchFromData(true);
+    fetchFromData();
   }
 }
