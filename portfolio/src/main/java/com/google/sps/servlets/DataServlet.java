@@ -69,7 +69,6 @@ public class DataServlet extends HttpServlet {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
     String email = request.getParameter("form-email"); 
-    // String email = getLoginStatus();
 
     if (text == null || name == null || email == null) {
       response.sendError(400);
