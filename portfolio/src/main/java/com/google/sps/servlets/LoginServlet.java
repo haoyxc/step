@@ -40,7 +40,6 @@ public class LoginServlet extends HttpServlet {
       jsonObj += "\"url\": ";
       jsonObj += "\"" + loginUrl + "\"";
       jsonObj += "}";
-      System.out.println(jsonObj); 
     }
     response.setContentType("application/json");
     response.getWriter().println(jsonObj);
