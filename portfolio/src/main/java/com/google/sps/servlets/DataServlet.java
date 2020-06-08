@@ -72,7 +72,8 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
-    String email = getLoginStatus();
+    String email = request.getParameter("form-email"); 
+    // String email = getLoginStatus();
 
     if (text == null || name == null || email == null) {
       response.sendError(400);
@@ -91,23 +92,5 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);   
     response.sendRedirect("/"); 
-  }
-  /**
-   * Helper function to get login status
-   */
-  String getLoginStatus() {
-    HttpClient loginClient = HttpClient.newHttpClient();
-    HttpRequest loginRequest = HttpRequest.newBuilder()
-      .uri(URI.create("/login"))
-      .build();
-    HttpResponse<String> loginResponse;
-    try {
-      loginResponse = loginClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
-      return loginResponse.body();
-  
-    } catch (Exception e) {
-      System.out.println("Caught Exception!");
-      return null;
-    }
   }
 }
