@@ -17,19 +17,32 @@ public class LoginServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
-    String json;
+    String jsonObj= "";
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      json = gson.toJson(userEmail);
+      jsonObj = "{";
+      jsonObj += "\"email\": ";
+      jsonObj += "\"" + userEmail + "\"";
+      jsonObj += ", ";
+      jsonObj += "\"url\": ";
+      jsonObj += "\"" + logoutUrl + "\"";
+      jsonObj += "}";
     } else {
       String urlToRedirectToAfterUserLogsIn = "/";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-      json = gson.toJson("");
+      jsonObj = "{";
+      jsonObj += "\"email\": ";
+      jsonObj += null;
+      jsonObj += ", ";
+      jsonObj += "\"url\": ";
+      jsonObj += "\"" + loginUrl + "\"";
+      jsonObj += "}";
+      System.out.println(jsonObj); 
     }
     response.setContentType("application/json");
-    response.getWriter().println(json);
+    response.getWriter().println(jsonObj);
   }
 }
