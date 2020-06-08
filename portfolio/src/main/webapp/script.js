@@ -85,7 +85,7 @@ async function fetchFromData() {
     node.append(contentElement);
     root.append(node);
   }
-
+  console.log(comments);
   // Adds all of the messages to a div
   comments.forEach(c => {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
@@ -123,6 +123,10 @@ function createCommentElement(comment, id) {
   const dateReadable = (new Date(comment.timestamp)).toDateString();
   nameElement.text(`${comment.name} at ${dateReadable}`);
 
+  const emailElement = $("<p></p>");
+  emailElement.addClass("comment-email");
+  emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
+
   const deleteBtn = $("<button></button>");
   deleteBtn.text("Delete");
   deleteBtn.on("click", async () => {
@@ -131,6 +135,7 @@ function createCommentElement(comment, id) {
 
   node.append(contentElement);
   node.append(nameElement);
+  node.append(emailElement);
   node.append(deleteBtn);
   return node;
 }
@@ -189,7 +194,7 @@ function toggleImgs(element, containerName) {
 async function checkLogin() { 
   const resp = await fetch('/login');
   const json = await resp.json();
-  console.log("checkLogin json", json);
+
   //if user is logged in, want the top to say logged out
   if (json.email) {
     $("#form-container").removeClass("invisible");
@@ -217,6 +222,7 @@ function correctDisplay() {
  */
 function updateHeaderToLogoutIfLoggedIn(bool, url) {
   $("#login-container").attr("href", url);
-  //true: 
+  
+  //True means user is logged in so the text should be set to logged out
   bool ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
