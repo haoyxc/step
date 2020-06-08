@@ -72,21 +72,9 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
+    String email = getLoginStatus();
 
-    //REQUEST THE EMAIL
-    HttpClient loginClient = HttpClient.newHttpClient();
-    HttpRequest loginRequest = HttpRequest.newBuilder()
-      .uri(URI.create("/login"))
-      .build();
-    HttpResponse<String> loginResponse;
-    try {
-      loginResponse = loginClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
-      System.out.println(loginResponse.body());
-    } catch (Exception e) {
-      System.out.println("Caught!");
-    }
-
-    if (text == null || name == null) {
+    if (text == null || name == null || email == null) {
       response.sendError(400);
       return;
     }
@@ -97,10 +85,31 @@ public class DataServlet extends HttpServlet {
 
     commentEntity.setProperty("content", text); 
     commentEntity.setProperty("name", name); 
+    commentEntity.setProperty("email", email); 
     commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);   
     response.sendRedirect("/"); 
+  }
+  /**
+   * Helper function to get login status
+   */
+  String getLoginStatus() {
+        //REQUEST THE EMAIL
+    HttpClient loginClient = HttpClient.newHttpClient();
+    HttpRequest loginRequest = HttpRequest.newBuilder()
+      .uri(URI.create("/login"))
+      .build();
+    HttpResponse<String> loginResponse;
+    try {
+      loginResponse = loginClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
+      System.out.println(loginResponse.body());
+      return loginResponse.body();
+  
+    } catch (Exception e) {
+      System.out.println("Caught!");
+      return null;
+    }
   }
 }
