@@ -184,9 +184,14 @@ function toggleImgs(element, containerName) {
 async function checkLogin() { 
   const resp = await fetch('/login');
   const json = await resp.json();
-  if (json) {
+  console.log("checkLogin json", json);
+  //if user is logged in, want the top to say logged out
+  if (json.email) {
     $("#form-container").removeClass("invisible");
+    updateHeaderToLogoutIfLoggedIn(true, json.url);
+    return;
   }
+  updateHeaderToLogoutIfLoggedIn(false, json.url);
 }
 
 /**
@@ -198,4 +203,10 @@ function correctDisplay() {
     $("#all-messages").empty(); 
     fetchFromData();
   }
+}
+
+function updateHeaderToLogoutIfLoggedIn(bool, url) {
+  $("#login-container").attr("href", url);
+  //true: 
+  bool ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
