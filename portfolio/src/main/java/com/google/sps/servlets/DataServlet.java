@@ -37,6 +37,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
     // Gets the latest number of comments posted by the name in the queryParam
+
     String numParam = request.getParameter("num");
     String queryParam = request.getParameter("query");
     

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 document.addEventListener("DOMContentLoaded", loadSkills);
+document.addEventListener("DOMContentLoaded", checkLogin);
 
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
@@ -175,6 +176,17 @@ function toggleImgs(element, containerName) {
   $(element).hasClass("fa-sort-down") ? 
     $(element).addClass("fa-sort-up").removeClass("fa-sort-down") : 
     $(element).addClass("fa-sort-down").removeClass("fa-sort-up");
+}
+
+/**
+ * Checks the login status of the user. Displays the form only if user is logged in
+ */
+async function checkLogin() { 
+  const resp = await fetch('/login');
+  const json = await resp.json();
+  if (json) {
+    $("#form-container").removeClass("invisible");
+  }
 }
 
 /**
