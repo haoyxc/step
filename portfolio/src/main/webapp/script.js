@@ -218,6 +218,6 @@ function correctDisplay() {
 function updateHeaderToLogoutIfLoggedIn(isLoggedIn, url) {
   $("#login-container").attr("href", url);
   
-  //True means user is logged in so the text should be set to logged out
+  // True means user is logged in so the text should be set to logged out
   isLoggedIn ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
