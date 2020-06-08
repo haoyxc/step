@@ -18,7 +18,8 @@
           <a href="#skills-container" onClick="setActiveTab(this)">Skills</a>
           <a href="#food-container" onClick="setActiveTab(this)">Food</a>
           <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
-          <a href="#comment-container" onClick="setActiveTab(this)">Comment</a>
+          <a href="#comment-container" onClick="setActiveTab(this)">Comments</a>
+          <a id="login-container" onClick="setActiveTab(this)">Login</a>
         </div>
       </div>
       
@@ -223,6 +224,8 @@
             <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
             <label for="form-name-input">Name</label>
             <input type="text" name="form-name" id="form-name-input" onkeyup="configureBtn()">
+            <label for="form-email-input">Email</label>
+            <input type="text" name="form-email" id="form-email-input" readonly="readonly">
             <input type="submit" value="Comment!" id="form-submit-btn" class="form-btn" disabled/>
           </form>
         </div>
