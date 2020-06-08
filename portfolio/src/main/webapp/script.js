@@ -85,7 +85,7 @@ async function fetchFromData() {
     node.append(contentElement);
     root.append(node);
   }
-  console.log(comments);
+
   // Adds all of the messages to a div
   comments.forEach(c => {
     root.append(createCommentElement(c.propertyMap, c.key.id)); 
