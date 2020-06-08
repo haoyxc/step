@@ -96,7 +96,6 @@ public class DataServlet extends HttpServlet {
    * Helper function to get login status
    */
   String getLoginStatus() {
-        //REQUEST THE EMAIL
     HttpClient loginClient = HttpClient.newHttpClient();
     HttpRequest loginRequest = HttpRequest.newBuilder()
       .uri(URI.create("/login"))
@@ -104,11 +103,10 @@ public class DataServlet extends HttpServlet {
     HttpResponse<String> loginResponse;
     try {
       loginResponse = loginClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
-      System.out.println(loginResponse.body());
       return loginResponse.body();
   
     } catch (Exception e) {
-      System.out.println("Caught!");
+      System.out.println("Caught Exception!");
       return null;
     }
   }
