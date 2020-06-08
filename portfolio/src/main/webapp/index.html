@@ -230,13 +230,14 @@
         <!-- Container with button to get a message -->
         <div id="comment-container" class="container">
           <h2>Comments</h2>
-          <select id="num-comments">
+          <select id="num-comments" onchange="correctDisplay()">
             <option value=1 selected>1</option>
             <option value=3>3</option>
             <option value=5>5</option>
             <option value=10>10</option>
           </select>
-          <button onClick="fetchFromData()" id="get-msg-btn" class="form-btn">Show Comments</button>
+          <input type="text" id="comment-query-input" placeholder="Filter Comments By Name" onkeyup="correctDisplay()">
+          <button onClick="onShowBtnClick()" id="get-msg-btn" class="form-btn">Show Comments</button>
           <button onClick="hideComments()" class="invisible" id="hide-msg-btn">Hide Comments</button>
           <div id="all-messages"></div>
         </div>
