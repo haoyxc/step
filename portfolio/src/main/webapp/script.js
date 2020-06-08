@@ -92,11 +92,6 @@ async function fetchFromData() {
   }); 
 };
 
-async function handleFormSubmit() {
-  const selectedNum = $("#form-comment-input").val(); //the number of comments the user wants
-  const query = $("#form-name-input").val();
-}
-
 /** 
  * Replace "Show Messages" button with "Hide Messages" button
  */
