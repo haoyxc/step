@@ -25,6 +25,10 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +72,19 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("form-comment"); 
     String name = request.getParameter("form-name"); 
+
+    //REQUEST THE EMAIL
+    HttpClient loginClient = HttpClient.newHttpClient();
+    HttpRequest loginRequest = HttpRequest.newBuilder()
+      .uri(URI.create("/login"))
+      .build();
+    HttpResponse<String> loginResponse;
+    try {
+      loginResponse = loginClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
+      System.out.println(loginResponse.body());
+    } catch (Exception e) {
+      System.out.println("Caught!");
+    }
 
     if (text == null || name == null) {
       response.sendError(400);
