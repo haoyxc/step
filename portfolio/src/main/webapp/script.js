@@ -92,6 +92,11 @@ async function fetchFromData() {
   }); 
 };
 
+async function handleFormSubmit() {
+  const selectedNum = $("#form-comment-input").val(); //the number of comments the user wants
+  const query = $("#form-name-input").val();
+}
+
 /** 
  * Replace "Show Messages" button with "Hide Messages" button
  */
@@ -188,6 +193,7 @@ async function checkLogin() {
   //if user is logged in, want the top to say logged out
   if (json.email) {
     $("#form-container").removeClass("invisible");
+    $("#form-email-input").val(json.email);
     updateHeaderToLogoutIfLoggedIn(true, json.url);
     return;
   }
@@ -205,6 +211,10 @@ function correctDisplay() {
   }
 }
 
+/**
+ * Takes in a boolean to reflect whether the user is logged in and if so, changes the text to "Logout".
+ * Called whenever page loads.
+ */
 function updateHeaderToLogoutIfLoggedIn(bool, url) {
   $("#login-container").attr("href", url);
   //true: 
