@@ -215,9 +215,9 @@ function correctDisplay() {
  * Takes in a boolean to reflect whether the user is logged in and if so, changes the text to "Logout".
  * Called whenever page loads.
  */
-function updateHeaderToLogoutIfLoggedIn(bool, url) {
+function updateHeaderToLogoutIfLoggedIn(isLoggedIn, url) {
   $("#login-container").attr("href", url);
   
   //True means user is logged in so the text should be set to logged out
-  bool ? $("#login-container").text("Logout") : $("#login-container").text("Login");
+  isLoggedIn ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
