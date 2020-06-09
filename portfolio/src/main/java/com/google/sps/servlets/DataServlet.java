@@ -82,7 +82,7 @@ public class DataServlet extends HttpServlet {
     } catch (Exception e) {
       response.sendError(400);
     }
-    
+
     Gson g = new Gson();
     Comment c = g.fromJson(body, Comment.class);
 
@@ -90,7 +90,7 @@ public class DataServlet extends HttpServlet {
     String name = c.name;
     String email = c.email; 
 
-    if (text == null || name == null) {
+    if (text == null || name == null || email == null) {
       response.sendError(400);
       return;
     }
