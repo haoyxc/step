@@ -204,5 +204,11 @@ function createMap() {
   console.log("HELLP")
   const map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+      {center: {lat: 33.022, lng: -96.6989}, zoom: 10});
+
+  const marker = new google.maps.Marker({
+    position: {lat: 33.029256, lng: -96.793147},
+    map: map,
+    title: "Trader Joe's"
+  });
 }
