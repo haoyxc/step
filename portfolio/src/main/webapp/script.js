@@ -92,11 +92,15 @@ async function fetchFromData() {
   }); 
 };
 
+/**
+ * Handles the form on submit, send data from form as body to server
+ */
 async function onSubmitForm() {
   const content = $("#form-comment-input").val(); 
   const name = $("#form-name-input").val();
-  const email = "test@google.com"
-  console.log(content, name);
+  const respLogin = await fetch('/login');
+  const jsonLogin = await resp.json();
+  const email = jsonLogin.email;
   const resp = await fetch("/data", {
     method: 'POST', 
     headers: {
@@ -104,7 +108,6 @@ async function onSubmitForm() {
     }, 
     body: JSON.stringify({content, name, email})
   });
-  const json = resp.json();
 }
 
 /** 
