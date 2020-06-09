@@ -219,7 +219,8 @@
         <!-- Form to Submit Comment -->
         <div id="form-container" class="container invisible">
           <h2>Have an Opinion? Add a comment below!</h2>
-          <form id="comment-form" action="/data" method="POST">
+          <!-- <form id="comment-form" action="/data" method="POST"> -->
+          <form id="comment-form" onsubmit="onSubmitForm()">
             <label for="form-comment-input">Comment</label>
             <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
             <label for="form-name-input">Name</label>
