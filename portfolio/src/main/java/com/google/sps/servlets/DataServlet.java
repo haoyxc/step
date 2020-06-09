@@ -73,14 +73,14 @@ public class DataServlet extends HttpServlet {
     String body = "";
     try (BufferedReader reader = request.getReader()) {
       if (reader == null) {
-            return;
+        return;
       }
       String line;
       while ((line = reader.readLine()) != null) {
         body = line; 
       }
     } catch (Exception e) {
-      System.out.println("oh no");
+      response.sendError(400);
     }
     System.out.println(body);
     Gson g = new Gson();
