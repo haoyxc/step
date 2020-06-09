@@ -82,7 +82,7 @@ public class DataServlet extends HttpServlet {
     } catch (Exception e) {
       response.sendError(400);
     }
-    System.out.println(body);
+    
     Gson g = new Gson();
     Comment c = g.fromJson(body, Comment.class);
 
