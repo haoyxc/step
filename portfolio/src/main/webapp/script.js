@@ -14,6 +14,7 @@
 
 document.addEventListener("DOMContentLoaded", loadSkills);
 document.addEventListener("DOMContentLoaded", checkLogin);
+let globalEmail = null;
 
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
@@ -76,10 +77,7 @@ async function fetchFromData() {
 
   const root = $("#all-messages");
 
-  // Gets the email of logged in
-  const respLogin = await fetch('/login');
-  const jsonLogin = await resp.json();
-  const email = jsonLogin.email;
+  const email = globalEmail;
 
   // Tells the user if there's no comments
   if (comments.length === 0) {
@@ -103,9 +101,10 @@ async function fetchFromData() {
 async function onSubmitForm() {
   const content = $("#form-comment-input").val(); 
   const name = $("#form-name-input").val();
-  const respLogin = await fetch('/login');
-  const jsonLogin = await resp.json();
-  const email = jsonLogin.email;
+
+  // a null email is handled in the server and will send a 404
+  const email =  globalEmail;
+  
   const resp = await fetch("/data", {
     method: 'POST', 
     headers: {
@@ -113,6 +112,7 @@ async function onSubmitForm() {
     }, 
     body: JSON.stringify({content, name, email})
   });
+  const respJson = resp.json();
 }
 
 /** 
@@ -147,7 +147,7 @@ function createCommentElement(comment, id, emailLoggedIn) {
 
   // delete button only present if person logged in is teh one who posted the comment
   let deleteBtn; 
-  if (comment.email === emailLoggedIn) {
+  if (emailLoggedIn !== null && comment.email === emailLoggedIn) {
     deleteBtn = $("<button></button>");
     deleteBtn.text("Delete");
     deleteBtn.on("click", async () => {
@@ -223,6 +223,7 @@ async function checkLogin() {
   if (json.email) {
     $("#form-container").removeClass("invisible");
     updateHeaderToLogoutIfLoggedIn(true, json.url);
+    globalEmail = json.email;
     return;
   }
   updateHeaderToLogoutIfLoggedIn(false, json.url);
