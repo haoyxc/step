@@ -222,7 +222,6 @@ async function checkLogin() {
   //if user is logged in, want the top to say logged out
   if (json.email) {
     $("#form-container").removeClass("invisible");
-    $("#form-email-input").val(json.email);
     updateHeaderToLogoutIfLoggedIn(true, json.url);
     return;
   }
