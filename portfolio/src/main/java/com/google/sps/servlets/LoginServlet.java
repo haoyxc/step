@@ -19,11 +19,9 @@ public class LoginServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
     UserService userService = UserServiceFactory.getUserService();
-    ServerResponse serverResp;
     String redirectUrl = "/";
     String userEmail;
     String url;
-    Boolean loggedIn; 
     if (userService.isUserLoggedIn()) {
       userEmail = userService.getCurrentUser().getEmail();
       url = userService.createLogoutURL(redirectUrl);
@@ -31,7 +29,7 @@ public class LoginServlet extends HttpServlet {
       userEmail = null;
       url = userService.createLoginURL(redirectUrl);
     }
-    serverResp = ServerResponse.create(userEmail, url);
+    ServerResponse serverResp = serverResp = ServerResponse.create(userEmail, url);
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(serverResp));
   }
