@@ -92,6 +92,21 @@ async function fetchFromData() {
   }); 
 };
 
+async function onSubmitForm() {
+  const content = $("#form-comment-input").val(); 
+  const name = $("#form-name-input").val();
+  const email = "test@google.com"
+  console.log(content, name);
+  const resp = await fetch("/data", {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify({content, name, email})
+  });
+  const json = resp.json();
+}
+
 /** 
  * Replace "Show Messages" button with "Hide Messages" button
  */
