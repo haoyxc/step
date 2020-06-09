@@ -14,6 +14,7 @@
 
 document.addEventListener("DOMContentLoaded", loadSkills);
 document.addEventListener("DOMContentLoaded", checkLogin);
+let globalEmail = null;
 
 /**
  * Makes the clicked header link have the class "active" and removes the "active" class from the other header links
@@ -76,6 +77,8 @@ async function fetchFromData() {
 
   const root = $("#all-messages");
 
+  const email = globalEmail;
+
   // Tells the user if there's no comments
   if (comments.length === 0) {
     const node = $("<div></div>");
@@ -88,9 +91,28 @@ async function fetchFromData() {
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.append(createCommentElement(c.propertyMap, c.key.id)); 
+    root.append(createCommentElement(c.propertyMap, c.key.id, email)); 
   }); 
 };
+
+/**
+ * Handles the form on submit, send data from form as body to server
+ */
+async function onSubmitForm() {
+  const content = $("#form-comment-input").val(); 
+  const name = $("#form-name-input").val();
+
+  // a null email is handled in the server and will send a 404
+  const email =  globalEmail;
+  
+  const resp = await fetch("/data", {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify({content, name, email})
+  });
+}
 
 /** 
  * Replace "Show Messages" button with "Hide Messages" button
@@ -105,28 +127,37 @@ function replaceShowWithHideBtn() {
  * as well as a button for user to remove the comment. This is intended for if the 
  * number of comments or name queried changes, and not when the "Show" button is clicked.
  */
-function createCommentElement(comment, id) {
+function createCommentElement(comment, id, emailLoggedIn) {
   const node = $("<div></div>");
   node.addClass("msg");
 
   const contentElement = $("<span></span>");
   contentElement.addClass("comment-content");
   contentElement.text(comment.content);
+  node.append(contentElement);
 
   const nameElement = $("<p></p>");
   nameElement.addClass("comment-name");
   const dateReadable = (new Date(comment.timestamp)).toDateString();
   nameElement.text(`${comment.name} at ${dateReadable}`);
-
-  const deleteBtn = $("<button></button>");
-  deleteBtn.text("Delete");
-  deleteBtn.on("click", async () => {
-    await deleteComment(id);
-  })
-
-  node.append(contentElement);
   node.append(nameElement);
-  node.append(deleteBtn);
+
+  const emailElement = $("<p></p>");
+  emailElement.addClass("comment-email");
+  emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
+  node.append(emailElement);
+
+  // delete button only present if person logged in is teh one who posted the comment or me!
+  const myEmail = "cindyup@gmail.com";
+  if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
+    const deleteBtn = $("<button></button>");
+    deleteBtn.text("Delete");
+    deleteBtn.on("click", async () => {
+      await deleteComment(id);
+    })
+    node.append(deleteBtn);
+  };
+
   return node;
 }
 
@@ -184,9 +215,15 @@ function toggleImgs(element, containerName) {
 async function checkLogin() { 
   const resp = await fetch('/login');
   const json = await resp.json();
-  if (json) {
+
+  //if user is logged in, want the top to say logged out
+  if (json.email) {
     $("#form-container").removeClass("invisible");
+    updateHeaderToLogoutIfLoggedIn(true, json.url);
+    globalEmail = json.email;
+    return;
   }
+  updateHeaderToLogoutIfLoggedIn(false, json.url);
 }
 
 /**
@@ -198,4 +235,15 @@ function correctDisplay() {
     $("#all-messages").empty(); 
     fetchFromData();
   }
+}
+
+/**
+ * Takes in a boolean to reflect whether the user is logged in and if so, changes the text to "Logout".
+ * Called whenever page loads.
+ */
+function updateHeaderToLogoutIfLoggedIn(isLoggedIn, url) {
+  $("#login-container").attr("href", url);
+  
+  // True means user is logged in so the text should be set to logged out
+  isLoggedIn ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
