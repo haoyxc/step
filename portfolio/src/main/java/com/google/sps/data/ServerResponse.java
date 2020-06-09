@@ -31,7 +31,7 @@ public abstract class ServerResponse {
   
   @Nullable abstract String email();
   
-  //url is the logout url and the redirect if email is Not null
-  //or the login url and the redirect if the email is null
+  // url is the logout url and the redirect if email is Not null
+  // or the login url and the redirect if the email is null
   abstract String url();
 }
