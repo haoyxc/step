@@ -263,5 +263,12 @@ function createMap() {
       map: map,
       title: loc[0]
     })
+    // marker.addListener('click', showMarkerText)
   })
+}
+
+function showMarkerText() {
+  const descriptions = new Map([["Trader Joe's", "Favorite grocery store"], ["Plano West Senior High School", "That's my High School!"]]);
+  $("#map-text").text(descriptions[marker.getTitle()]);
+  $("#map-text").text("");
 }
