@@ -147,7 +147,8 @@ function createCommentElement(comment, id, emailLoggedIn) {
 
   // delete button only present if person logged in is teh one who posted the comment
   let deleteBtn; 
-  if (emailLoggedIn !== null && comment.email === emailLoggedIn) {
+  const myEmail = "cindyup@gmail.com";
+  if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
     deleteBtn = $("<button></button>");
     deleteBtn.text("Delete");
     deleteBtn.on("click", async () => {
