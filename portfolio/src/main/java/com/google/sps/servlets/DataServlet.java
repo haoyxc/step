@@ -24,11 +24,15 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /** Servlet that gets comments and posts comments */
 @WebServlet("/data")
@@ -66,11 +70,27 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("form-comment"); 
-    String name = request.getParameter("form-name"); 
-    String email = request.getParameter("form-email"); 
+    String body = "";
+    try (BufferedReader reader = request.getReader()) {
+      if (reader == null) {
+            return;
+      }
+      String line;
+      while ((line = reader.readLine()) != null) {
+        body = line; 
+      }
+    } catch (Exception e) {
+      System.out.println("oh no");
+    }
+    System.out.println(body);
+    Gson g = new Gson();
+    Comment c = g.fromJson(body, Comment.class);
 
-    if (text == null || name == null || email == null) {
+    String text = c.content;
+    String name = c.name;
+    String email = c.email; 
+
+    if (text == null || name == null) {
       response.sendError(400);
       return;
     }
