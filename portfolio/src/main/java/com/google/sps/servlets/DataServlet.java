@@ -24,11 +24,15 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /** Servlet that gets comments and posts comments */
 @WebServlet("/data")
@@ -66,10 +70,27 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("form-comment"); 
-    String name = request.getParameter("form-name"); 
+    String body = "";
+    try (BufferedReader reader = request.getReader()) {
+      if (reader == null) {
+        return;
+      }
+      String line;
+      while ((line = reader.readLine()) != null) {
+        body += line; 
+      }
+    } catch (Exception e) {
+      response.sendError(400);
+    }
 
-    if (text == null || name == null) {
+    Gson g = new Gson();
+    Comment c = g.fromJson(body, Comment.class);
+
+    String text = c.getContent();
+    String name = c.getName();
+    String email = c.getEmail(); 
+
+    if (text == null || name == null || email == null) {
       response.sendError(400);
       return;
     }
@@ -80,6 +101,7 @@ public class DataServlet extends HttpServlet {
 
     commentEntity.setProperty("content", text); 
     commentEntity.setProperty("name", name); 
+    commentEntity.setProperty("email", email); 
     commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

@@ -19,7 +19,8 @@
           <a href="#skills-container" onClick="setActiveTab(this)">Skills</a>
           <a href="#food-container" onClick="setActiveTab(this)">Food</a>
           <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
-          <a href="#comment-container" onClick="setActiveTab(this)">Comment</a>
+          <a href="#comment-container" onClick="setActiveTab(this)">Comments</a>
+          <a id="login-container" onClick="setActiveTab(this)">Login</a>
         </div>
       </div>
       
@@ -223,12 +224,12 @@
         <!-- Form to Submit Comment -->
         <div id="form-container" class="container invisible">
           <h2>Have an Opinion? Add a comment below!</h2>
-          <form id="comment-form" action="/data" method="POST">
+          <form id="comment-form" onsubmit="onSubmitForm()">
             <label for="form-comment-input">Comment</label>
             <input type="text" name="form-comment" id="form-comment-input" onkeyup="configureBtn()">
             <label for="form-name-input">Name</label>
             <input type="text" name="form-name" id="form-name-input" onkeyup="configureBtn()">
-            <input type="submit" value="Comment!" id="form-submit-btn" class="form-btn" disabled/>
+            <input type="submit" value="Comment!" id="form-submit-btn" class="form-btn"  disabled/>
           </form>
         </div>
         
