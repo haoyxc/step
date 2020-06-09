@@ -134,33 +134,30 @@ function createCommentElement(comment, id, emailLoggedIn) {
   const contentElement = $("<span></span>");
   contentElement.addClass("comment-content");
   contentElement.text(comment.content);
+  node.append(contentElement);
 
   const nameElement = $("<p></p>");
   nameElement.addClass("comment-name");
   const dateReadable = (new Date(comment.timestamp)).toDateString();
   nameElement.text(`${comment.name} at ${dateReadable}`);
+  node.append(nameElement);
 
   const emailElement = $("<p></p>");
   emailElement.addClass("comment-email");
   emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
+  node.append(emailElement);
 
-  // delete button only present if person logged in is teh one who posted the comment
-  let deleteBtn; 
+  // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
   if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
-    deleteBtn = $("<button></button>");
+    const deleteBtn = $("<button></button>");
     deleteBtn.text("Delete");
     deleteBtn.on("click", async () => {
       await deleteComment(id);
     })
-  } else {
-    deleteBtn = null;
-  }
+    node.append(deleteBtn);
+  };
 
-  node.append(contentElement);
-  node.append(nameElement);
-  node.append(emailElement);
-  node.append(deleteBtn);
   return node;
 }
 
