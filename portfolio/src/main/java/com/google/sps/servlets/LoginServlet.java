@@ -3,11 +3,14 @@ package com.google.sps.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
+import com.google.sps.data.ServerResponse;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -19,29 +22,20 @@ public class LoginServlet extends HttpServlet {
     Gson gson = new Gson();
     String jsonObj= "";
     UserService userService = UserServiceFactory.getUserService();
+    ServerResponse serverResp;
+    String redirectUrl = "/";
+    String userEmail;
+    String url;
+    Boolean loggedIn; 
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
-      String urlToRedirectToAfterUserLogsOut = "/";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      jsonObj = "{";
-      jsonObj += "\"email\": ";
-      jsonObj += "\"" + userEmail + "\"";
-      jsonObj += ", ";
-      jsonObj += "\"url\": ";
-      jsonObj += "\"" + logoutUrl + "\"";
-      jsonObj += "}";
+      userEmail = userService.getCurrentUser().getEmail();
+      url = userService.createLogoutURL(redirectUrl);
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-      jsonObj = "{";
-      jsonObj += "\"email\": ";
-      jsonObj += null;
-      jsonObj += ", ";
-      jsonObj += "\"url\": ";
-      jsonObj += "\"" + loginUrl + "\"";
-      jsonObj += "}";
+      userEmail = null;
+      url = userService.createLoginURL(redirectUrl);
     }
+    serverResp = ServerResponse.create(userEmail, url);
     response.setContentType("application/json");
-    response.getWriter().println(jsonObj);
+    response.getWriter().println(gson.toJson(serverResp));
   }
 }
