@@ -20,13 +20,25 @@ package com.google.sps.data;
  * content is the text of the commnent, name is the name of the commenter, and email is email of the commenter. 
  */
 public class Comment {
-  public String content;
-  public String name;
-  public String email;
+  private String content;
+  private String name;
+  private String email;
 
   public Comment(String content, String name, String email) {
     this.content = content;
     this.name = name;
     this.email = email;
+  }
+
+  public getContent() {
+    return this.content;
+  }
+
+  public getName() {
+    return this.name;
+  }
+
+  public getEmail() {
+    return this.email;
   }
 }

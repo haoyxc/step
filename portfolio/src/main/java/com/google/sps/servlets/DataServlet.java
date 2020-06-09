@@ -86,9 +86,9 @@ public class DataServlet extends HttpServlet {
     Gson g = new Gson();
     Comment c = g.fromJson(body, Comment.class);
 
-    String text = c.content;
-    String name = c.name;
-    String email = c.email; 
+    String text = c.getContent;
+    String name = c.getName;
+    String email = c.getEmail; 
 
     if (text == null || name == null || email == null) {
       response.sendError(400);
