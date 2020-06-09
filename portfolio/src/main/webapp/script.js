@@ -112,7 +112,6 @@ async function onSubmitForm() {
     }, 
     body: JSON.stringify({content, name, email})
   });
-  const respJson = resp.json();
 }
 
 /** 
