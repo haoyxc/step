@@ -249,14 +249,19 @@ function updateHeaderToLogoutIfLoggedIn(isLoggedIn, url) {
 }
 
 function createMap() {
-  console.log("HELLP")
+  const locations = [
+    ["Trader Joe's", 33.029256, -96.793147], 
+    ["Plano West Senior High School", 33.0437, -96.8140]
+  ]
   const map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 33.022, lng: -96.6989}, zoom: 10});
+      {center: {lat: 33.07196, lng: -96.771786}, zoom: 10});
 
-  const marker = new google.maps.Marker({
-    position: {lat: 33.029256, lng: -96.793147},
-    map: map,
-    title: "Trader Joe's"
-  });
+  locations.forEach(loc => {
+    const marker = new google.maps.Marker({
+      position: {lat: loc[1], lng: loc[2]}, 
+      map: map,
+      title: loc[0]
+    })
+  })
 }
