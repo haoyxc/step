@@ -77,7 +77,7 @@ public class DataServlet extends HttpServlet {
       }
       String line;
       while ((line = reader.readLine()) != null) {
-        body = line; 
+        body += line; 
       }
     } catch (Exception e) {
       response.sendError(400);
