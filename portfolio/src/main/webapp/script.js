@@ -76,6 +76,11 @@ async function fetchFromData() {
 
   const root = $("#all-messages");
 
+  // Gets the email of logged in
+  const respLogin = await fetch('/login');
+  const jsonLogin = await resp.json();
+  const email = jsonLogin.email;
+
   // Tells the user if there's no comments
   if (comments.length === 0) {
     const node = $("<div></div>");
@@ -88,7 +93,7 @@ async function fetchFromData() {
 
   // Adds all of the messages to a div
   comments.forEach(c => {
-    root.append(createCommentElement(c.propertyMap, c.key.id)); 
+    root.append(createCommentElement(c.propertyMap, c.key.id, email)); 
   }); 
 };
 
@@ -123,7 +128,7 @@ function replaceShowWithHideBtn() {
  * as well as a button for user to remove the comment. This is intended for if the 
  * number of comments or name queried changes, and not when the "Show" button is clicked.
  */
-function createCommentElement(comment, id) {
+function createCommentElement(comment, id, emailLoggedIn) {
   const node = $("<div></div>");
   node.addClass("msg");
 
@@ -140,11 +145,17 @@ function createCommentElement(comment, id) {
   emailElement.addClass("comment-email");
   emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
 
-  const deleteBtn = $("<button></button>");
-  deleteBtn.text("Delete");
-  deleteBtn.on("click", async () => {
-    await deleteComment(id);
-  })
+  // delete button only present if person logged in is teh one who posted the comment
+  let deleteBtn; 
+  if (comment.email === emailLoggedIn) {
+    deleteBtn = $("<button></button>");
+    deleteBtn.text("Delete");
+    deleteBtn.on("click", async () => {
+      await deleteComment(id);
+    })
+  } else {
+    deleteBtn = null;
+  }
 
   node.append(contentElement);
   node.append(nameElement);
