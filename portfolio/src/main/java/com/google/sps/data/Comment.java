@@ -30,15 +30,15 @@ public class Comment {
     this.email = email;
   }
 
-  public getContent() {
+  public String getContent() {
     return this.content;
   }
 
-  public getName() {
+  public String getName() {
     return this.name;
   }
 
-  public getEmail() {
+  public String getEmail() {
     return this.email;
   }
 }
