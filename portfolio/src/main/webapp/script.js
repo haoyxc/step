@@ -279,7 +279,7 @@ function createMap() {
 function showMarkerText(marker) {
   const descriptions = {
     "Trader Joe's": "I fell in love with this place after listening to a podcast called \"Should America be Run by...Trader Joe's?\"", 
-    "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 14000) and it was really not great", 
+    "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 1400) and it was really not great", 
     "Sprouts Farmers Market": "I go here so often for bread, avocados, cheese, etc. Somtimes multiple times just in one day (it's so bad!)"
   }
   if (descriptions[this.title]) {
