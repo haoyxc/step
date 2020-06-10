@@ -147,10 +147,8 @@ function createCommentElement(comment, id, emailLoggedIn) {
   emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
   node.append(emailElement);
 
-  console.log("SCORE", comment.sentimentScore);
   const colorClass = getColorClass(comment.sentimentScore);
   contentElement.addClass(colorClass);
-  console.log(colorClass);
 
   // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
@@ -162,10 +160,13 @@ function createCommentElement(comment, id, emailLoggedIn) {
     })
     node.append(deleteBtn);
   };
-
   return node;
 }
 
+/**
+ * Gets the color class for css based on the score between -1 and 1. 
+ * Called with first loading the individual comments
+ */
 function getColorClass(score) {
   switch(true) {
     case (score < -.75):
