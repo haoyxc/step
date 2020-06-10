@@ -284,7 +284,7 @@ function showMarkerText(marker) {
   }
   if (descriptions[this.title]) {
     $("#map-location-title").text("");
-    $("map-location-title").text(this.title);
+    $("#map-location-title").text(this.title);
     $("#map-text").text("");
     $("#map-text").text(descriptions[this.title]);
   } 
