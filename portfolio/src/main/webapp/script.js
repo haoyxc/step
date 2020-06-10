@@ -147,6 +147,7 @@ function createCommentElement(comment, id, emailLoggedIn) {
   emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
   node.append(emailElement);
 
+  console.log("SCORE", comment.sentimentScore);
   // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
   if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
