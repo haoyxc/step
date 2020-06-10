@@ -257,19 +257,20 @@ function createMap() {
     ["Trader Joe's", 33.029256, -96.793147], 
     ["Plano West Senior High School", 33.0437, -96.8140], 
     ["Sprouts Farmers Market", 33.069816, -96.773118]
-  ]
+  ];
   const map = new google.maps.Map(
       document.getElementById('map'),
-      {center: {lat: 33.07196, lng: -96.771786}, zoom: 10});
+      {center: {lat: 33.07196, lng: -96.771786}, zoom: 10}
+  );
 
   locations.forEach(loc => {
     const marker = new google.maps.Marker({
       position: {lat: loc[1], lng: loc[2]}, 
       map: map,
       title: loc[0]
-    })
-    marker.addListener('click', showMarkerText)
-  })
+    });
+    marker.addListener('click', showMarkerText);
+  });
 }
 
 /**
@@ -281,7 +282,7 @@ function showMarkerText(marker) {
     "Trader Joe's": "I fell in love with this place after listening to a podcast called \"Should America be Run by...Trader Joe's?\"", 
     "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 1400) and it was really not great", 
     "Sprouts Farmers Market": "I go here so often for bread, avocados, cheese, etc. Somtimes multiple times just in one day (it's so bad!)"
-  }
+  };
   if (descriptions[this.title]) {
     $("#map-location-title").text("");
     $("#map-location-title").text(this.title);
