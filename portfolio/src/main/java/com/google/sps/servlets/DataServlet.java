@@ -114,6 +114,11 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("/"); 
   }
 
+  /**
+   * Gets the sentiment score of a message
+   * @param message: the message to get the score of
+   * @return the score between -1 and 1 of the message
+   */
   private float getSentimentScore(String message) throws IOException {
     Document doc =
       Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
