@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/fd405735a1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdxexT3puYtfURHraE3FR_LARYjZC5NL4"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="createMap()">
     <div id="body"> 
       
       <!-- Header with page sections -->
@@ -17,6 +18,7 @@
           <a href="#about-container" class="active" onClick="setActiveTab(this)">About</a>
           <a href="#skills-container" onClick="setActiveTab(this)">Skills</a>
           <a href="#food-container" onClick="setActiveTab(this)">Food</a>
+          <a href="#map-container" onClick="setActiveTab(this)">Places</a>
           <a href="#contact-container" onClick="setActiveTab(this)">Contact</a>
           <a href="#comment-container" onClick="setActiveTab(this)">Comments</a>
           <a id="login-container" onClick="setActiveTab(this)">Login</a>
@@ -204,7 +206,17 @@
               </div>
             </div>
           </div>
+        </div>
 
+        <!-- Container with a map and description that appears on click -->
+        <div id="map-container" class="container">
+          <h2>Favorite Places</h2>
+          <div id="map">
+          </div>
+          <div id="map-text-container">
+            <h3 id="map-location-title"></h3>
+            <p id="map-text"></p>
+          </div>
         </div>
 
         <!-- Information about contacting -->
