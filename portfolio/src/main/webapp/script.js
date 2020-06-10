@@ -258,6 +258,13 @@ function createMap() {
     ["Plano West Senior High School", 33.0437, -96.8140], 
     ["Sprouts Farmers Market", 33.069816, -96.773118]
   ];
+
+  const descriptions = {
+    "Trader Joe's": "I fell in love with this place after listening to a podcast called \"Should America be Run by...Trader Joe's?\"", 
+    "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 1400) and it was really not great", 
+    "Sprouts Farmers Market": "I go here so often for bread, avocados, cheese, etc. Somtimes multiple times just in one day (it's so bad!)"
+  };
+
   const map = new google.maps.Map(
       document.getElementById('map'),
       {center: {lat: 33.07196, lng: -96.771786}, zoom: 10}
@@ -269,7 +276,7 @@ function createMap() {
       map: map,
       title: loc[0]
     });
-    marker.addListener('click', showMarkerText);
+    marker.addListener('click', () => showMarkerText(marker, descriptions));
   });
 }
 
@@ -277,16 +284,11 @@ function createMap() {
  * Show a description associated with a marker when a marker is clicked
  * Clears the space first
  */
-function showMarkerText(marker) {
-  const descriptions = {
-    "Trader Joe's": "I fell in love with this place after listening to a podcast called \"Should America be Run by...Trader Joe's?\"", 
-    "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 1400) and it was really not great", 
-    "Sprouts Farmers Market": "I go here so often for bread, avocados, cheese, etc. Somtimes multiple times just in one day (it's so bad!)"
-  };
-  if (descriptions[this.title]) {
+function showMarkerText(marker, descriptions) {
+  if (descriptions[marker.title]) {
     $("#map-location-title").text("");
-    $("#map-location-title").text(this.title);
+    $("#map-location-title").text(marker.title);
     $("#map-text").text("");
-    $("#map-text").text(descriptions[this.title]);
+    $("#map-text").text(descriptions[marker.title]);
   } 
 }
