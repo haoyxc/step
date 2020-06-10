@@ -301,7 +301,7 @@ function createMap() {
     const marker = new google.maps.Marker({
       position: {lat: loc[1], lng: loc[2]}, 
       map: map,
-      title: loc[0]
+      title: loc[0],
     });
     marker.addListener('click', () => showMarkerText(marker, descriptions));
   });
