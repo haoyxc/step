@@ -248,10 +248,15 @@ function updateHeaderToLogoutIfLoggedIn(isLoggedIn, url) {
   isLoggedIn ? $("#login-container").text("Logout") : $("#login-container").text("Login");
 }
 
+/**
+ * Create a map centered around Plano, Texas, where I'm from
+ * Each marker displays different text on click
+ */
 function createMap() {
   const locations = [
     ["Trader Joe's", 33.029256, -96.793147], 
-    ["Plano West Senior High School", 33.0437, -96.8140]
+    ["Plano West Senior High School", 33.0437, -96.8140], 
+    ["Sprouts Farmers Market", 33.069816, -96.773118]
   ]
   const map = new google.maps.Map(
       document.getElementById('map'),
@@ -267,11 +272,20 @@ function createMap() {
   })
 }
 
+/**
+ * Show a description associated with a marker when a marker is clicked
+ * Clears the space first
+ */
 function showMarkerText(marker) {
   const descriptions = {
-    "Trader Joe's": "Favorite grocery store", 
-    "Plano West Senior High School": "That's my High School!"
+    "Trader Joe's": "I fell in love with this place after listening to a podcast called \"Should America be Run by...Trader Joe's?\"", 
+    "Plano West Senior High School": "I went to high school here! It was a large public high school (class size was 14000) and it was really not great", 
+    "Sprouts Farmers Market": "I go here so often for bread, avocados, cheese, etc. Somtimes multiple times just in one day (it's so bad!)"
   }
-  $("#map-text").text("");
-  $("#map-text").text(descriptions[this.title]);
+  if (descriptions[this.title]) {
+    $("#map-location-title").text("");
+    $("map-location-title").text(this.title);
+    $("#map-text").text("");
+    $("#map-text").text(descriptions[this.title]);
+  } 
 }
