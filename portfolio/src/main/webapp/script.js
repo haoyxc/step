@@ -148,6 +148,10 @@ function createCommentElement(comment, id, emailLoggedIn) {
   node.append(emailElement);
 
   console.log("SCORE", comment.sentimentScore);
+  const colorClass = getColorClass(comment.sentimentScore);
+  contentElement.addClass(colorClass);
+  console.log(colorClass);
+
   // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
   if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
@@ -160,6 +164,27 @@ function createCommentElement(comment, id, emailLoggedIn) {
   };
 
   return node;
+}
+
+function getColorClass(score) {
+  switch(true) {
+    case (score < -.75):
+      return "neg-four";
+    case (score < -.5):
+      return "neg-three";
+    case (score < -.25):
+      return "neg-two";
+    case (score < 0):
+      return "neg-one";
+    case (score < .25):
+      return "pos-one";
+    case (score < .5):
+      return "pos-two";
+    case (score < .75):
+      return "pos-three";
+    case (score <= 1):
+      return "pos-four";
+  }
 }
 
 /**
