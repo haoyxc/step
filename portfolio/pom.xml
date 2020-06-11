@@ -49,6 +49,11 @@
       <artifactId>jsr305</artifactId>
       <version>3.0.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-translate</artifactId>
+      <version>1.70.0</version>
+    </dependency>
   </dependencies>
 
   <build>
