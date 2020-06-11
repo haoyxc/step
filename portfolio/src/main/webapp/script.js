@@ -293,6 +293,19 @@ function showMarkerText(marker, descriptions) {
   } 
 }
 
-function onLangSelect() {
-  const selectedLang = $("#lang-select").val();
+async function onLangSelect() {
+  const languageCode = $("#lang-select").val();
+  const text = $("#bio").text();
+  const params = new URLSearchParams();
+  params.append('languageCode', languageCode);
+  params.append('text', text);
+  const resp = await fetch('/translate', {method: 'POST', body: params});
+  const respText = await resp.text();
+  console.log(respText);
+  replaceText("bio", respText);
+}
+
+function replaceText(id, newText) {
+  $(`#${id}`).text("");
+  $(`#${id}`).text(newText);
 }
