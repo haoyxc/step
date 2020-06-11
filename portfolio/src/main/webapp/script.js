@@ -292,3 +292,8 @@ function showMarkerText(marker, descriptions) {
     $("#map-text").text(descriptions[marker.title]);
   } 
 }
+
+function onLangSelect() {
+  const selectedLang = $("#lang-select").val();
+  console.log("LANGUAGE", selectedLang);
+}
