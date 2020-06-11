@@ -148,7 +148,10 @@ function createCommentElement(comment, id, emailLoggedIn) {
   node.append(emailElement);
 
   const colorClass = getColorClass(comment.sentimentScore);
-  contentElement.addClass(colorClass);
+  //colorClass is undefined if not within -1 and 1
+  if (colorClass) {
+    contentElement.addClass(colorClass);
+  }
 
   // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
@@ -168,7 +171,7 @@ function createCommentElement(comment, id, emailLoggedIn) {
  * Called with first loading the individual comments
  */
 function getColorClass(score) {
-  switch(true) {
+  switch(score >= -1) {
     case (score < -.75):
       return "neg-four";
     case (score < -.5):
