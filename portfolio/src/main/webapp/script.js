@@ -148,7 +148,7 @@ function createCommentElement(comment, id, emailLoggedIn) {
   node.append(emailElement);
 
   const colorClass = getColorClass(comment.sentimentScore);
-  //colorClass is undefined if not within -1 and 1
+  // colorClass is undefined if not within -1 and 1
   if (colorClass) {
     contentElement.addClass(colorClass);
   }
@@ -203,7 +203,7 @@ async function deleteComment(id) {
     return;
   }
 
-  //empty the messages and refetch so the page updates accordingly
+  // empty the messages and refetch so the page updates accordingly
   $("#all-messages").empty(); 
   await fetchFromData();
 }
@@ -246,7 +246,7 @@ async function checkLogin() {
   const resp = await fetch('/login');
   const json = await resp.json();
 
-  //if user is logged in, want the top to say logged out
+  // if user is logged in, want the top to say logged out
   if (json.email) {
     $("#form-container").removeClass("invisible");
     updateHeaderToLogoutIfLoggedIn(true, json.url);
@@ -260,7 +260,7 @@ async function checkLogin() {
  * Updates the message display based on query parameters if already displayed
  */
 function correctDisplay() {
-  //only relevant if messages are already showing
+  // only relevant if messages are already showing
   if ($("#get-msg-btn").hasClass("invisible")) {
     $("#all-messages").empty(); 
     fetchFromData();
