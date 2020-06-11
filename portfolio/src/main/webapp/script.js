@@ -295,5 +295,4 @@ function showMarkerText(marker, descriptions) {
 
 function onLangSelect() {
   const selectedLang = $("#lang-select").val();
-  console.log("LANGUAGE", selectedLang);
 }
