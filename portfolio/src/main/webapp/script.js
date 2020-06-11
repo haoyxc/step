@@ -147,6 +147,12 @@ function createCommentElement(comment, id, emailLoggedIn) {
   emailElement.attr("href", "mailto:" + comment.email).text(comment.email);
   node.append(emailElement);
 
+  const colorClass = getColorClass(comment.sentimentScore);
+  // colorClass is undefined if not within -1 and 1
+  if (colorClass) {
+    contentElement.addClass(colorClass);
+  }
+
   // delete button only present if person logged in is teh one who posted the comment or me!
   const myEmail = "cindyup@gmail.com";
   if (emailLoggedIn !== null && comment.email === emailLoggedIn || comment.email == myEmail) {
@@ -157,8 +163,32 @@ function createCommentElement(comment, id, emailLoggedIn) {
     })
     node.append(deleteBtn);
   };
-
   return node;
+}
+
+/**
+ * Gets the color class for css based on the score between -1 and 1. 
+ * Called with first loading the individual comments
+ */
+function getColorClass(score) {
+  switch(score >= -1) {
+    case (score < -.75):
+      return "neg-four";
+    case (score < -.5):
+      return "neg-three";
+    case (score < -.25):
+      return "neg-two";
+    case (score < 0):
+      return "neg-one";
+    case (score < .25):
+      return "pos-one";
+    case (score < .5):
+      return "pos-two";
+    case (score < .75):
+      return "pos-three";
+    case (score <= 1):
+      return "pos-four";
+  }
 }
 
 /**
@@ -173,7 +203,7 @@ async function deleteComment(id) {
     return;
   }
 
-  //empty the messages and refetch so the page updates accordingly
+  // empty the messages and refetch so the page updates accordingly
   $("#all-messages").empty(); 
   await fetchFromData();
 }
@@ -216,7 +246,7 @@ async function checkLogin() {
   const resp = await fetch('/login');
   const json = await resp.json();
 
-  //if user is logged in, want the top to say logged out
+  // if user is logged in, want the top to say logged out
   if (json.email) {
     $("#form-container").removeClass("invisible");
     updateHeaderToLogoutIfLoggedIn(true, json.url);
@@ -230,7 +260,7 @@ async function checkLogin() {
  * Updates the message display based on query parameters if already displayed
  */
 function correctDisplay() {
-  //only relevant if messages are already showing
+  // only relevant if messages are already showing
   if ($("#get-msg-btn").hasClass("invisible")) {
     $("#all-messages").empty(); 
     fetchFromData();
@@ -274,7 +304,7 @@ function createMap() {
     const marker = new google.maps.Marker({
       position: {lat: loc[1], lng: loc[2]}, 
       map: map,
-      title: loc[0]
+      title: loc[0],
     });
     marker.addListener('click', () => showMarkerText(marker, descriptions));
   });
