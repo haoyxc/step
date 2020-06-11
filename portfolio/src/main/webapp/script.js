@@ -293,8 +293,12 @@ function showMarkerText(marker, descriptions) {
   } 
 }
 
+/**
+ * Function gets called when the language selected changes. 
+ * Translated all id's in a list to the selected language
+ */
 async function onLangSelect() {
-  const idsToTranslate = ["bio", "bio-supplement"]
+  const idsToTranslate = ["bio-title", "bio", "bio-supplement"]
   const languageCode = $("#lang-select").val();
   idsToTranslate.forEach(async id => {
     const text = $(`#${id}`).text();
@@ -307,6 +311,10 @@ async function onLangSelect() {
   })
 }
 
+/**
+ * Replaces test at an id with some new text. 
+ * id refers to the element id and newTest refers to the text to replace the old one with
+ */
 function replaceText(id, newText) {
   $(`#${id}`).text("");
   $(`#${id}`).text(newText);
