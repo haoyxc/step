@@ -294,15 +294,17 @@ function showMarkerText(marker, descriptions) {
 }
 
 async function onLangSelect() {
+  const idsToTranslate = ["bio", "bio-supplement"]
   const languageCode = $("#lang-select").val();
-  const text = $("#bio").text();
-  const params = new URLSearchParams();
-  params.append('languageCode', languageCode);
-  params.append('text', text);
-  const resp = await fetch('/translate', {method: 'POST', body: params});
-  const respText = await resp.text();
-  console.log(respText);
-  replaceText("bio", respText);
+  idsToTranslate.forEach(async id => {
+    const text = $(`#${id}`).text();
+    const params = new URLSearchParams();
+    params.append('languageCode', languageCode);
+    params.append('text', text);
+    const resp = await fetch('/translate', {method: 'POST', body: params});
+    const respText = await resp.text();
+    replaceText(id, respText);
+  })
 }
 
 function replaceText(id, newText) {
