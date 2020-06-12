@@ -305,6 +305,7 @@ async function onLangSelect() {
     const params = new URLSearchParams();
     params.append('languageCode', languageCode);
     params.append('text', text);
+    params.append("format", "text");
     const resp = await fetch('/translate', {method: 'POST', body: params});
     const respText = await resp.text();
     $(`#${id}`).text(respText);
