@@ -276,6 +276,39 @@ h2, h3 {
   font-size: .6rem;
 }
 
+/* Colors for sentiment */
+.neg-four:hover {
+  background: #e77474;
+}
+
+.neg-three:hover {
+  background: #e97f63;
+}
+
+.neg-two:hover {
+  background: #e58d54; 
+}
+
+.neg-one:hover {
+  background: #db9c49;
+}
+
+.pos-one:hover {
+  background: #ccac45
+}
+
+.pos-two:hover {
+  background: #b9bb4b;
+}
+
+.pos-three:hover {
+  background: #a0c85b;
+}
+
+.pos-four:hover {
+  background: #81d573;
+}
+
 /* MAP */
 #map {
   width: 100%;
