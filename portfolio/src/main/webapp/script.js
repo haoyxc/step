@@ -307,15 +307,6 @@ async function onLangSelect() {
     params.append('text', text);
     const resp = await fetch('/translate', {method: 'POST', body: params});
     const respText = await resp.text();
-    replaceText(id, respText);
+    $(`#${id}`).text(respText);
   })
-}
-
-/**
- * Replaces test at an id with some new text. 
- * id refers to the element id and newTest refers to the text to replace the old one with
- */
-function replaceText(id, newText) {
-  $(`#${id}`).text("");
-  $(`#${id}`).text(newText);
 }
