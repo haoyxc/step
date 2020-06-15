@@ -23,6 +23,9 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
@@ -89,6 +92,7 @@ public class DataServlet extends HttpServlet {
     String text = c.getContent();
     String name = c.getName();
     String email = c.getEmail(); 
+    float score = getSentimentScore(text);
 
     if (text == null || name == null || email == null) {
       response.sendError(400);
@@ -103,9 +107,25 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("name", name); 
     commentEntity.setProperty("email", email); 
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("sentimentScore", score);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);   
     response.sendRedirect("/"); 
+  }
+
+  /**
+   * Gets the sentiment score of a message
+   * @param message: the message to get the score of
+   * @return the score between -1 and 1 of the message
+   */
+  private float getSentimentScore(String message) throws IOException {
+    Document doc =
+      Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    float score = sentiment.getScore();
+    languageService.close();
+    return score;
   }
 }
