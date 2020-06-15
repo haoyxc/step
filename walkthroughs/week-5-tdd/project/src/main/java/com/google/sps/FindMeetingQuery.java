@@ -116,12 +116,10 @@ public final class FindMeetingQuery {
        prevEnd = currTimeRange.end();
      }
 
-     TimeRange lastRange = TimeRange.fromStartEnd(prevEnd, TimeRange.END_OF_DAY, true);
-     if (lastRange.duration() >= requestDuration) {
-         availableTimes.add(lastRange);
-       }
-       return availableTimes;
-    
+    TimeRange lastRange = TimeRange.fromStartEnd(prevEnd, TimeRange.END_OF_DAY, true);
+    if (lastRange.duration() >= requestDuration) {
+    	availableTimes.add(lastRange);
+    }
+    return availableTimes;
   }
-
 }
