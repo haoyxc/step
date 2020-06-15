@@ -322,3 +322,22 @@ function showMarkerText(marker, descriptions) {
     $("#map-text").text(descriptions[marker.title]);
   } 
 }
+
+/**
+ * Function gets called when the language selected changes. 
+ * Translated all id's in a list to the selected language
+ */
+async function onLangSelect() {
+  const idsToTranslate = ["bio-title", "bio", "bio-supplement"]
+  const languageCode = $("#lang-select").val();
+  idsToTranslate.forEach(async id => {
+    const text = $(`#${id}`).text();
+    const params = new URLSearchParams();
+    params.append('languageCode', languageCode);
+    params.append('text', text);
+    params.append("format", "text");
+    const resp = await fetch('/translate', {method: 'POST', body: params});
+    const respText = await resp.text();
+    $(`#${id}`).text(respText);
+  })
+}
