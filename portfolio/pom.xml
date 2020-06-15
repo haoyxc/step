@@ -51,6 +51,11 @@
     </dependency>
     <dependency>
       <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-language</artifactId>
+      <version>1.55.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-translate</artifactId>
       <version>1.70.0</version>
     </dependency>
@@ -66,9 +71,7 @@
         <version>2.2.0</version>
         <configuration>
           <deploy.projectId>cindyhao-step-new-2020</deploy.projectId>
-          <!-- <deploy.version>1</deploy.version> -->
-          <deploy.promote>false</deploy.promote>
-          <deploy.version>staging</deploy.version>
+          <deploy.version>1</deploy.version>
         </configuration>
       </plugin>
     </plugins>
