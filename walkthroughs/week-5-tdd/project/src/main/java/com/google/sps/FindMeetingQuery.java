@@ -50,14 +50,12 @@ public final class FindMeetingQuery {
 
     // Get available times from the mandatory people
     List<TimeRange> unavailableTimes =  getUnavailableTimes(events, requestAttendees);
-    Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
     List<TimeRange> unavailableTimesMerged = mergeTimeRanges(unavailableTimes);
     List<TimeRange> availableTimes = getAvailableTimes(unavailableTimesMerged, request.getDuration()); 
 
     // Process the optional attendees 
     if (!requestAttendeesOptional.isEmpty()) {
     	List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
-    	Collections.sort(busyTimesOptional, TimeRange.ORDER_BY_START);
     	List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
     	List<TimeRange> freeTimesOptional = getAvailableTimes(busyTimesMergedOpt, request.getDuration()); 
       if (requestAttendees.isEmpty()) {
@@ -123,6 +121,7 @@ public final class FindMeetingQuery {
         }
       }
     }
+    Collections.sort(timeRangeList, TimeRange.ORDER_BY_START);
     return timeRangeList;   
   }
 
