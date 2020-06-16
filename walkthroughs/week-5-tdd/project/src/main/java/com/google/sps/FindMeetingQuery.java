@@ -18,27 +18,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 
 import java.util.Collection;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // General outline:
-    // Consider mandatory and optional employees separately. For each: 
+    // Consider mandatory and optional employees separately. For each:
     // 	1. add all the meetings times to a list
     // 	2. merge overlapping times in the list
     // 	3. find available times based on the unavailable times
-    
+
     // Edge cases: duration is longer than a day or events is empty
     if (request.getDuration() >= TimeRange.WHOLE_DAY.duration()) {
       return Arrays.asList();
     } else if (events.isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
-    } 
+    }
 
     Collection<String> requestAttendees = request.getAttendees();
     Collection<String> requestAttendeesOptional = request.getOptionalAttendees();
@@ -49,18 +47,20 @@ public final class FindMeetingQuery {
     }
 
     // Get available times from the mandatory people
-    List<TimeRange> unavailableTimes =  getUnavailableTimes(events, requestAttendees);
+    List<TimeRange> unavailableTimes = getUnavailableTimes(events, requestAttendees);
     List<TimeRange> unavailableTimesMerged = mergeTimeRanges(unavailableTimes);
-    List<TimeRange> availableTimes = getAvailableTimes(unavailableTimesMerged, request.getDuration()); 
+    List<TimeRange> availableTimes =
+        getAvailableTimes(unavailableTimesMerged, request.getDuration());
 
-    // Process the optional attendees 
+    // Process the optional attendees
     if (!requestAttendeesOptional.isEmpty()) {
-    	List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
-    	List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
+      List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
+      List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
       busyTimesMergedOpt.addAll(unavailableTimesMerged);
       Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
-    	List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
-    	List<TimeRange> allAvailableTimes = getAvailableTimes(allBusyTimesMerged, request.getDuration());
+      List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
+      List<TimeRange> allAvailableTimes =
+          getAvailableTimes(allBusyTimesMerged, request.getDuration());
       if (requestAttendees.isEmpty()) {
         return allAvailableTimes;
       } else if (!allAvailableTimes.isEmpty()) {
@@ -70,7 +70,7 @@ public final class FindMeetingQuery {
 
     return availableTimes;
   }
-	
+
   /**
    * Gets all the times where attendees are busy, sorted by start time
    *
@@ -78,11 +78,13 @@ public final class FindMeetingQuery {
    * @param requestAttendees the attendees that are relevant
    * @return a list of time ranges that are from occupied people, sorted by start time
    */
-  private List<TimeRange> getUnavailableTimes (Collection<Event> events, Collection<String> requestAttendees) {
+  private List<TimeRange> getUnavailableTimes(
+      Collection<Event> events, Collection<String> requestAttendees) {
     List<TimeRange> timeRangeList = new ArrayList<>();
     for (Event e : events) {
-      
-      // This should be a HashSet, so calls to contains in the for loop should be expected constant time
+
+      // This should be a HashSet, so calls to contains in the for loop should be expected constant
+      // time
       Set<String> eventAttendees = e.getAttendees();
 
       for (String attendee : eventAttendees) {
@@ -93,11 +95,12 @@ public final class FindMeetingQuery {
       }
     }
     Collections.sort(timeRangeList, TimeRange.ORDER_BY_START);
-    return timeRangeList;   
+    return timeRangeList;
   }
 
   /**
-   * Merge overlapping time ranges and returns a new time range that emcompasses the times of both of them
+   * Merge overlapping time ranges and returns a new time range that emcompasses the times of both
+   * of them
    *
    * @param rangeList the list of unmerged time ranges, sorted by start time
    * @return a list of merged time ranges, still sorted by start time
@@ -109,7 +112,7 @@ public final class FindMeetingQuery {
       if (mergedList.isEmpty() || !currTimeRange.overlaps(mergedList.get(mergedList.size() - 1))) {
         mergedList.add(currTimeRange);
       } else {
-        TimeRange lastTimeRange = mergedList.get(mergedList.size() -1);
+        TimeRange lastTimeRange = mergedList.get(mergedList.size() - 1);
         int modifiedStart = Math.min(lastTimeRange.start(), currTimeRange.start());
         int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
 
@@ -121,27 +124,29 @@ public final class FindMeetingQuery {
     return mergedList;
   }
 
-	/**
-   * Returns all the available times during the day that is at least of the specified duration from a list of intervals that are merged
+  /**
+   * Returns all the available times during the day that is at least of the specified duration from
+   * a list of intervals that are merged
    *
    * @param unavailableTimesMerged the unavailable times that won't be in the returned time ranges
    * @param requestDuration the minimum length of every time range returned
    * @return a list of time ranges, in order of start time
    */
-  private List<TimeRange> getAvailableTimes(List<TimeRange> unavailableTimesMerged, long requestDuration) {
+  private List<TimeRange> getAvailableTimes(
+      List<TimeRange> unavailableTimesMerged, long requestDuration) {
     List<TimeRange> availableTimes = new ArrayList<>();
     int prevEnd = TimeRange.START_OF_DAY; // end of the previous range, start from beginning of day
-   	for (TimeRange currTimeRange : unavailableTimesMerged) {
-       TimeRange freeTimeRange = TimeRange.fromStartEnd(prevEnd, currTimeRange.start(), false);
-       if (freeTimeRange.duration() >= requestDuration) {
-         availableTimes.add(freeTimeRange);
-       }
-       prevEnd = currTimeRange.end();
+    for (TimeRange currTimeRange : unavailableTimesMerged) {
+      TimeRange freeTimeRange = TimeRange.fromStartEnd(prevEnd, currTimeRange.start(), false);
+      if (freeTimeRange.duration() >= requestDuration) {
+        availableTimes.add(freeTimeRange);
+      }
+      prevEnd = currTimeRange.end();
     }
     // Consider the time range from the end of the last one to the end of the day
     TimeRange lastRange = TimeRange.fromStartEnd(prevEnd, TimeRange.END_OF_DAY, true);
     if (lastRange.duration() >= requestDuration) {
-    	availableTimes.add(lastRange);
+      availableTimes.add(lastRange);
     }
     return availableTimes;
   }
