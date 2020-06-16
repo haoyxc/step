@@ -48,10 +48,11 @@ public final class FindMeetingQuery {
     // List of times that cannot be in the returned interval, eventually sorted by start time 
     List<TimeRange> unavailableTimes =  getUnavailableTimes(events, requestAttendees);
     Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
-    
+    System.out.println(unavailableTimes);
     // Merge the times 
     List<TimeRange> unavailableTimesMerged = mergeTimeRanges(unavailableTimes);
-    List<TimeRange> availableTimes = getAvailableTimes(unavailableTimes, request.getDuration());
+    System.out.println(unavailableTimesMerged);
+    List<TimeRange> availableTimes = getAvailableTimes(unavailableTimesMerged, request.getDuration()); 
 
     // TODO: FIX THIS MESS
     return availableTimes;
@@ -65,13 +66,14 @@ public final class FindMeetingQuery {
         mergedList.add(currTimeRange);
       } else {
         TimeRange lastTimeRange = mergedList.get(mergedList.size() -1);
-
+        // System.out.println(lastTimeRange);
         // Want to adjust start and end accordingly
         int modifiedStart = Math.min(lastTimeRange.start(), currTimeRange.start());
-        int modifiedEnd = Math.max(lastTimeRange.start(), currTimeRange.start());
+        int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
 
         // TODO: figure out boolean
         TimeRange mergedRange = TimeRange.fromStartEnd(modifiedStart, modifiedEnd, false);
+        // System.out.println(mergedRange);
         mergedList.remove(lastTimeRange);
         mergedList.add(mergedRange);
       }
@@ -105,6 +107,7 @@ public final class FindMeetingQuery {
   }
 
   private List<TimeRange> getAvailableTimes(List<TimeRange> unavailableTimesMerged, long requestDuration) {
+    System.out.println(unavailableTimesMerged);
     List<TimeRange> availableTimes = new ArrayList<>();
     int prevEnd = TimeRange.START_OF_DAY;
    	for (TimeRange currTimeRange : unavailableTimesMerged) {
@@ -115,7 +118,7 @@ public final class FindMeetingQuery {
        }
        prevEnd = currTimeRange.end();
      }
-
+    System.out.println(prevEnd);
     TimeRange lastRange = TimeRange.fromStartEnd(prevEnd, TimeRange.END_OF_DAY, true);
     if (lastRange.duration() >= requestDuration) {
     	availableTimes.add(lastRange);
