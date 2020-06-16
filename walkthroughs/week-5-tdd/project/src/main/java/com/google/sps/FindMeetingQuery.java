@@ -57,19 +57,13 @@ public final class FindMeetingQuery {
     if (!requestAttendeesOptional.isEmpty()) {
     	List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
     	List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
-    	List<TimeRange> freeTimesOptional = getAvailableTimes(busyTimesMergedOpt, request.getDuration()); 
-      if (requestAttendees.isEmpty()) {
-        return freeTimesOptional;
-      } else if (freeTimesOptional.isEmpty()) {
-        return availableTimes;
-      }
-
-      // Overlap between the two
       busyTimesMergedOpt.addAll(unavailableTimesMerged);
-    	Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
+      Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
     	List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
     	List<TimeRange> allAvailableTimes = getAvailableTimes(allBusyTimesMerged, request.getDuration());
-      if (!allAvailableTimes.isEmpty()) {
+      if (requestAttendees.isEmpty()) {
+        return allAvailableTimes;
+      } else if (!allAvailableTimes.isEmpty()) {
         return allAvailableTimes;
       }
     }
