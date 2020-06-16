@@ -14,10 +14,10 @@
 
 package com.google.sps.data;
 
-/** 
- * Class that stores the components of a Comment item, reflects the schema of the Datastore.
- * Used in conjunction with gson in DataServlet.
- * content is the text of the commnent, name is the name of the commenter, and email is email of the commenter. 
+/**
+ * Class that stores the components of a Comment item, reflects the schema of the Datastore. Used in
+ * conjunction with gson in DataServlet. content is the text of the commnent, name is the name of
+ * the commenter, and email is email of the commenter.
  */
 public class Comment {
   private String content;

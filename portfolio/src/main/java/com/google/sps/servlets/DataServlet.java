@@ -18,11 +18,9 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.FetchOptions.Builder;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
@@ -35,19 +33,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 
 /** Servlet that gets comments and posts comments */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Gets the latest number of comments posted by the name in the queryParam
 
     String numParam = request.getParameter("num");
     String queryParam = request.getParameter("query");
-    
+
     if (numParam == null || queryParam == null) {
       response.sendError(400);
       return;
@@ -56,16 +53,17 @@ public class DataServlet extends HttpServlet {
     int numParsed = Integer.parseInt(numParam); // the number of comments the user wants
 
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-    
+
     if (!queryParam.isEmpty()) {
-      query.addFilter("name", Query.FilterOperator.EQUAL, queryParam); //filter by name of commenter
+      query.addFilter(
+          "name", Query.FilterOperator.EQUAL, queryParam); // filter by name of commenter
     }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     PreparedQuery results = datastore.prepare(query);
 
     Gson gson = new Gson();
-    String json = gson.toJson(results.asList(FetchOptions.Builder.withLimit(numParsed))); 
+    String json = gson.toJson(results.asList(FetchOptions.Builder.withLimit(numParsed)));
 
     response.setContentType("application/json;");
     response.getWriter().println(json);
@@ -80,7 +78,7 @@ public class DataServlet extends HttpServlet {
       }
       String line;
       while ((line = reader.readLine()) != null) {
-        body += line; 
+        body += line;
       }
     } catch (Exception e) {
       response.sendError(400);
@@ -91,7 +89,7 @@ public class DataServlet extends HttpServlet {
 
     String text = c.getContent();
     String name = c.getName();
-    String email = c.getEmail(); 
+    String email = c.getEmail();
     float score = getSentimentScore(text);
 
     if (text == null || name == null || email == null) {
@@ -100,28 +98,29 @@ public class DataServlet extends HttpServlet {
     }
 
     long timestamp = System.currentTimeMillis();
-    
+
     Entity commentEntity = new Entity("Comment");
 
-    commentEntity.setProperty("content", text); 
-    commentEntity.setProperty("name", name); 
-    commentEntity.setProperty("email", email); 
+    commentEntity.setProperty("content", text);
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("email", email);
     commentEntity.setProperty("timestamp", timestamp);
     commentEntity.setProperty("sentimentScore", score);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);   
-    response.sendRedirect("/"); 
+    datastore.put(commentEntity);
+    response.sendRedirect("/");
   }
 
   /**
    * Gets the sentiment score of a message
+   *
    * @param message: the message to get the score of
    * @return the score between -1 and 1 of the message
    */
   private float getSentimentScore(String message) throws IOException {
     Document doc =
-      Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
+        Document.newBuilder().setContent(message).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     float score = sentiment.getScore();
