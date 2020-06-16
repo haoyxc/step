@@ -130,14 +130,15 @@ public final class FindMeetingQuery {
    */
   private List<TimeRange> getAvailableTimes(List<TimeRange> unavailableTimesMerged, long requestDuration) {
     List<TimeRange> availableTimes = new ArrayList<>();
-    int prevEnd = TimeRange.START_OF_DAY;
+    int prevEnd = TimeRange.START_OF_DAY; // end of the previous range, start from beginning of day
    	for (TimeRange currTimeRange : unavailableTimesMerged) {
        TimeRange freeTimeRange = TimeRange.fromStartEnd(prevEnd, currTimeRange.start(), false);
        if (freeTimeRange.duration() >= requestDuration) {
          availableTimes.add(freeTimeRange);
        }
        prevEnd = currTimeRange.end();
-     }
+    }
+    // Consider the time range from the end of the last one to the end of the day
     TimeRange lastRange = TimeRange.fromStartEnd(prevEnd, TimeRange.END_OF_DAY, true);
     if (lastRange.duration() >= requestDuration) {
     	availableTimes.add(lastRange);
