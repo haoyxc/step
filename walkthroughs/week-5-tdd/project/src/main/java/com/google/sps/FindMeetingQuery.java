@@ -70,8 +70,33 @@ public final class FindMeetingQuery {
 
     return availableTimes;
   }
+	
+  /**
+   * Gets all the times where attendees are busy, sorted by start time
+   *
+   * @param events the list of events to process, request
+   * @param requestAttendees the attendees that are relevant
+   * @return a list of time ranges that are from occupied people, sorted by start time
+   */
+  private List<TimeRange> getUnavailableTimes (Collection<Event> events, Collection<String> requestAttendees) {
+    List<TimeRange> timeRangeList = new ArrayList<>();
+    for (Event e : events) {
+      
+      // This should be a HashSet, so calls to contains in the for loop should be expected constant time
+      Set<String> eventAttendees = e.getAttendees();
 
-	/**
+      for (String attendee : eventAttendees) {
+        if (requestAttendees.contains(attendee)) {
+          timeRangeList.add(e.getWhen());
+          break; // Need only one relevant attendee for the event to be valid
+        }
+      }
+    }
+    Collections.sort(timeRangeList, TimeRange.ORDER_BY_START);
+    return timeRangeList;   
+  }
+
+  /**
    * Merge overlapping time ranges and returns a new time range that emcompasses the times of both of them
    *
    * @param rangeList the list of unmerged time ranges, sorted by start time
@@ -95,36 +120,13 @@ public final class FindMeetingQuery {
     }
     return mergedList;
   }
-	
-  /**
-   * Gets all the times where attendees are busy, sorted by start time
-   *
-   * @param events the list of events to process, request
-   * @param requestAttendees the attendees that are relevant
-   * @return a list of time ranges that are from occupied people
-   */
-  private List<TimeRange> getUnavailableTimes (Collection<Event> events, Collection<String> requestAttendees) {
-    List<TimeRange> timeRangeList = new ArrayList<>();
-    for (Event e : events) {
-      Set<String> eventAttendees = e.getAttendees();
-
-      for (String attendee : eventAttendees) {
-        if (requestAttendees.contains(attendee)) {
-          timeRangeList.add(e.getWhen());
-          break; // Need only one relevant attendee for the event to be valid
-        }
-      }
-    }
-    Collections.sort(timeRangeList, TimeRange.ORDER_BY_START);
-    return timeRangeList;   
-  }
 
 	/**
    * Returns all the available times during the day that is at least of the specified duration from a list of intervals that are merged
    *
-   *@param unavailableTimesMerged the unavailable times that won't be in the returned time ranges
-   *@param requestDuration the minimum length of every time range returned
-   *@return a list of time ranges, in order of start time
+   * @param unavailableTimesMerged the unavailable times that won't be in the returned time ranges
+   * @param requestDuration the minimum length of every time range returned
+   * @return a list of time ranges, in order of start time
    */
   private List<TimeRange> getAvailableTimes(List<TimeRange> unavailableTimesMerged, long requestDuration) {
     List<TimeRange> availableTimes = new ArrayList<>();
