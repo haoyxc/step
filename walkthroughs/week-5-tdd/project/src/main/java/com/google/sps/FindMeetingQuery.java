@@ -27,21 +27,20 @@ import java.util.Collection;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-
+    // General outline:
+    // Consider mandatory and optional employees separately. For each: 
+    // 	1. add all the meetings times to a list
+    // 	2. merge overlapping times in the list
+    // 	3. find available times based on the unavailable times
+    
+    // Edge cases: duration is longer than a day or events is empty
     if (request.getDuration() >= TimeRange.WHOLE_DAY.duration()) {
       return Arrays.asList();
-    }
-    // If there are no events, can return the whole day as a time range
-    if (events.isEmpty()) {
+    } else if (events.isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     } 
 
-    Collection<TimeRange> result; 
-
-    // Required attendees from request
     Collection<String> requestAttendees = request.getAttendees();
-
-    // Optional attendees
     Collection<String> requestAttendeesOptional = request.getOptionalAttendees();
 
     // The whole day is free if there aren't any attendees
@@ -49,7 +48,7 @@ public final class FindMeetingQuery {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    // List of times that cannot be in the returned interval, eventually sorted by start time 
+    // Get available times from the mandatory people
     List<TimeRange> unavailableTimes =  getUnavailableTimes(events, requestAttendees);
     Collections.sort(unavailableTimes, TimeRange.ORDER_BY_START);
     System.out.println(unavailableTimes);
@@ -82,10 +81,15 @@ public final class FindMeetingQuery {
       }
     }
 
-    // TODO: FIX THIS MESS
     return availableTimes;
   }
 
+	/**
+   * Merge overlapping time ranges and returns a new time range that emcompasses the times of both of them
+   *
+   * @param rangeList the list of unmerged time ranges, sorted by start time
+   * @return a list of merged time ranges, still sorted by start time
+   */
   private List<TimeRange> mergeTimeRanges(List<TimeRange> rangeList) {
     ArrayList<TimeRange> mergedList = new ArrayList<>();
     for (TimeRange currTimeRange : rangeList) {
@@ -94,14 +98,10 @@ public final class FindMeetingQuery {
         mergedList.add(currTimeRange);
       } else {
         TimeRange lastTimeRange = mergedList.get(mergedList.size() -1);
-        // System.out.println(lastTimeRange);
-        // Want to adjust start and end accordingly
         int modifiedStart = Math.min(lastTimeRange.start(), currTimeRange.start());
         int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
 
-        // TODO: figure out boolean
         TimeRange mergedRange = TimeRange.fromStartEnd(modifiedStart, modifiedEnd, false);
-        // System.out.println(mergedRange);
         mergedList.remove(lastTimeRange);
         mergedList.add(mergedRange);
       }
@@ -110,7 +110,7 @@ public final class FindMeetingQuery {
   }
 	
   /**
-   * Gets all the times where attendees are busy
+   * Gets all the times where attendees are busy, sorted by start time
    *
    * @param events the list of events to process, request
    * @param requestAttendees the attendees that are relevant
@@ -134,12 +134,18 @@ public final class FindMeetingQuery {
     return timeRangeList;   
   }
 
+	/**
+   * Returns all the available times during the day that is at least of the specified duration from a list of intervals that are merged
+   *
+   *@param unavailableTimesMerged the unavailable times that won't be in the returned time ranges
+   *@param requestDuration the minimum length of every time range returned
+   *@return a list of time ranges, in order of start time
+   */
   private List<TimeRange> getAvailableTimes(List<TimeRange> unavailableTimesMerged, long requestDuration) {
     System.out.println(unavailableTimesMerged);
     List<TimeRange> availableTimes = new ArrayList<>();
     int prevEnd = TimeRange.START_OF_DAY;
    	for (TimeRange currTimeRange : unavailableTimesMerged) {
-       // TODO: figure out boolean
        TimeRange freeTimeRange = TimeRange.fromStartEnd(prevEnd, currTimeRange.start(), false);
        if (freeTimeRange.duration() >= requestDuration) {
          availableTimes.add(freeTimeRange);
