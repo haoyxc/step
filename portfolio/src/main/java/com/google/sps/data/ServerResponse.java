@@ -19,18 +19,18 @@ import javax.annotation.Nullable;
 
 @AutoValue
 /**
- * Class that contains the fields of a ServerResponse object which is send to the client in 
- * doGet of LoginServlet. 
- * email refers to the email of the user logged in and url refers to the full String url of the login/logout
- * url and the redirect.
+ * Class that contains the fields of a ServerResponse object which is send to the client in doGet of
+ * LoginServlet. email refers to the email of the user logged in and url refers to the full String
+ * url of the login/logout url and the redirect.
  */
 public abstract class ServerResponse {
   public static ServerResponse create(@Nullable String email, String url) {
     return new AutoValue_ServerResponse(email, url);
   }
-  
-  @Nullable abstract String email();
-  
+
+  @Nullable
+  abstract String email();
+
   // url is the logout url and the redirect if email is Not null
   // or the login url and the redirect if the email is null
   abstract String url();
