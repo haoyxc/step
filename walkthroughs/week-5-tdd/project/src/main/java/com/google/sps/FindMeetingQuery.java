@@ -26,7 +26,7 @@ import java.util.Collection;
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // General outline:
-    // Consider mandatory and optional employees separately. For each:
+    // Consider mandatory and optional attendees separately. For each:
     // 	1. add all the meetings times to a list
     // 	2. merge overlapping times in the list
     // 	3. find available times based on the unavailable times
@@ -54,8 +54,11 @@ public final class FindMeetingQuery {
 
     // Process the optional attendees
     if (!requestAttendeesOptional.isEmpty()) {
+      // Get unavailable times for optional attendees & merge ranges
       List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
       List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
+
+      // Combine unavailable times of optional and required attendees. 
       busyTimesMergedOpt.addAll(unavailableTimesMerged);
       Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
       List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
