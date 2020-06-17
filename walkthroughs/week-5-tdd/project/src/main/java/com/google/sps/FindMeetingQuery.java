@@ -115,7 +115,7 @@ public final class FindMeetingQuery {
       if (mergedList.isEmpty() || !currTimeRange.overlaps(mergedList.get(mergedList.size() - 1))) {
         mergedList.add(currTimeRange);
       } else {
-        int mergedListSize = mergedList.size(); 
+        int mergedListSize = mergedList.size();
         TimeRange lastTimeRange = mergedList.get(mergedListSize - 1);
         int modifiedStart = Math.min(lastTimeRange.start(), currTimeRange.start());
         int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
