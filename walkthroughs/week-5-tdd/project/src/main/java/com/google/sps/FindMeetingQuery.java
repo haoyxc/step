@@ -58,7 +58,7 @@ public final class FindMeetingQuery {
       List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
       List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
 
-      // Combine unavailable times of optional and required attendees.
+      // Combine unavailable times of optional and required attendees
       busyTimesMergedOpt.addAll(unavailableTimesMerged);
       Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
       List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
