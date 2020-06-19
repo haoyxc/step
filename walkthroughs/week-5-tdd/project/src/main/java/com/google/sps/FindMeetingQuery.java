@@ -58,7 +58,7 @@ public final class FindMeetingQuery {
       List<TimeRange> busyTimesOptional = getUnavailableTimes(events, requestAttendeesOptional);
       List<TimeRange> busyTimesMergedOpt = mergeTimeRanges(busyTimesOptional);
 
-      // Combine unavailable times of optional and required attendees. 
+      // Combine unavailable times of optional and required attendees
       busyTimesMergedOpt.addAll(unavailableTimesMerged);
       Collections.sort(busyTimesMergedOpt, TimeRange.ORDER_BY_START);
       List<TimeRange> allBusyTimesMerged = mergeTimeRanges(busyTimesMergedOpt);
@@ -115,12 +115,13 @@ public final class FindMeetingQuery {
       if (mergedList.isEmpty() || !currTimeRange.overlaps(mergedList.get(mergedList.size() - 1))) {
         mergedList.add(currTimeRange);
       } else {
-        TimeRange lastTimeRange = mergedList.get(mergedList.size() - 1);
+        int mergedListSize = mergedList.size();
+        TimeRange lastTimeRange = mergedList.get(mergedListSize - 1);
         int modifiedStart = Math.min(lastTimeRange.start(), currTimeRange.start());
         int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
 
         TimeRange mergedRange = TimeRange.fromStartEnd(modifiedStart, modifiedEnd, false);
-        mergedList.remove(lastTimeRange);
+        mergedList.remove(mergedListSize - 1); // Remove from the end of an ArrayList is constant
         mergedList.add(mergedRange);
       }
     }
