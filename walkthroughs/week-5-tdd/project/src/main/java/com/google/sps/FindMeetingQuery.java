@@ -121,7 +121,7 @@ public final class FindMeetingQuery {
         int modifiedEnd = Math.max(lastTimeRange.end(), currTimeRange.end());
 
         TimeRange mergedRange = TimeRange.fromStartEnd(modifiedStart, modifiedEnd, false);
-        mergedList.remove(mergedListSize - 1); // Remove with an index is constant I believe
+        mergedList.remove(mergedListSize - 1); // Remove from the end of an ArrayList is constant
         mergedList.add(mergedRange);
       }
     }
